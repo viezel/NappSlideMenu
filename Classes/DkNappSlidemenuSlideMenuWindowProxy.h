@@ -5,14 +5,12 @@
  * Please see the LICENSE included with this distribution for details.
  */
 #import "TiBase.h"
-#import "TiViewProxy.h"
-#import "TiUIWindowProxy.h"
+#import "TiWindowProxy.h"
+#import "DkNappSlidemenuSlideMenuWindow.h"
+#import "IIViewDeckController.h"
 
+@interface DkNappSlidemenuSlideMenuWindowProxy : TiWindowProxy<IIViewDeckControllerDelegate> {
 
-@interface DkNappSlidemenuSlideMenuWindowProxy : TiUIWindowProxy {
-
-@private
-    id<NSObject,TiOrientationController> detailView;
 }
 
 @end

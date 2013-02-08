@@ -11,6 +11,8 @@ The NappSlideMenu module extends the Appcelerator Titanium Mobile framework. Its
 
 The module is licensed under the MIT license.
 
+Thanks to `Tom Adriaenssen` for his great work with ViewDeck https://github.com/Inferis/ViewDeck
+
 
 ## Referencing the module in your Titanium Mobile application ##
 
