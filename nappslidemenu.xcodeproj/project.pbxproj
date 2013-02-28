@@ -28,18 +28,22 @@
 		24DE9E1211C5FE74003F90F6 /* DkNappSlidemenuModuleAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DE9E1011C5FE74003F90F6 /* DkNappSlidemenuModuleAssets.m */; };
 		AA747D9F0F9514B9006C5449 /* DkNappSlidemenu_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* DkNappSlidemenu_Prefix.pch */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
-		B600056E16BDA2F80005A1E9 /* IISideController.h in Headers */ = {isa = PBXBuildFile; fileRef = B600056816BDA2F80005A1E9 /* IISideController.h */; };
-		B600056F16BDA2F80005A1E9 /* IISideController.m in Sources */ = {isa = PBXBuildFile; fileRef = B600056916BDA2F80005A1E9 /* IISideController.m */; };
-		B600057016BDA2F80005A1E9 /* IIViewDeckController.h in Headers */ = {isa = PBXBuildFile; fileRef = B600056A16BDA2F80005A1E9 /* IIViewDeckController.h */; };
-		B600057116BDA2F80005A1E9 /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = B600056B16BDA2F80005A1E9 /* IIViewDeckController.m */; };
-		B600057216BDA2F80005A1E9 /* IIWrapController.h in Headers */ = {isa = PBXBuildFile; fileRef = B600056C16BDA2F80005A1E9 /* IIWrapController.h */; };
-		B600057316BDA2F80005A1E9 /* IIWrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = B600056D16BDA2F80005A1E9 /* IIWrapController.m */; };
 		B63D51CD16C59B8F00D25970 /* DkNappSlidemenuSlideMenuWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = B63D51C916C59B8F00D25970 /* DkNappSlidemenuSlideMenuWindow.h */; };
 		B63D51CE16C59B8F00D25970 /* DkNappSlidemenuSlideMenuWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = B63D51CA16C59B8F00D25970 /* DkNappSlidemenuSlideMenuWindow.m */; };
 		B63D51CF16C59B8F00D25970 /* DkNappSlidemenuSlideMenuWindowProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = B63D51CB16C59B8F00D25970 /* DkNappSlidemenuSlideMenuWindowProxy.h */; };
 		B63D51D016C59B8F00D25970 /* DkNappSlidemenuSlideMenuWindowProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = B63D51CC16C59B8F00D25970 /* DkNappSlidemenuSlideMenuWindowProxy.m */; };
 		B664E7A9164C4DBD00A66625 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B664E7A8164C4DBD00A66625 /* QuartzCore.framework */; };
 		B664E7BE164C5CE100A66625 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B664E7BD164C5CE100A66625 /* CoreGraphics.framework */; };
+		B67FE29116DFF995005F30E4 /* TiRootViewController+Extended.h in Headers */ = {isa = PBXBuildFile; fileRef = B67FE28F16DFF995005F30E4 /* TiRootViewController+Extended.h */; };
+		B67FE29216DFF995005F30E4 /* TiRootViewController+Extended.m in Sources */ = {isa = PBXBuildFile; fileRef = B67FE29016DFF995005F30E4 /* TiRootViewController+Extended.m */; };
+		B67FE29916DFFC93005F30E4 /* IISideController.h in Headers */ = {isa = PBXBuildFile; fileRef = B67FE29316DFFC93005F30E4 /* IISideController.h */; };
+		B67FE29A16DFFC93005F30E4 /* IISideController.m in Sources */ = {isa = PBXBuildFile; fileRef = B67FE29416DFFC93005F30E4 /* IISideController.m */; };
+		B67FE29B16DFFC93005F30E4 /* IIViewDeckController.h in Headers */ = {isa = PBXBuildFile; fileRef = B67FE29516DFFC93005F30E4 /* IIViewDeckController.h */; };
+		B67FE29C16DFFC93005F30E4 /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = B67FE29616DFFC93005F30E4 /* IIViewDeckController.m */; };
+		B67FE29D16DFFC93005F30E4 /* IIWrapController.h in Headers */ = {isa = PBXBuildFile; fileRef = B67FE29716DFFC93005F30E4 /* IIWrapController.h */; };
+		B67FE29E16DFFC93005F30E4 /* IIWrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = B67FE29816DFFC93005F30E4 /* IIWrapController.m */; };
+		B67FE2A216DFFCA4005F30E4 /* JRSwizzle.h in Headers */ = {isa = PBXBuildFile; fileRef = B67FE2A016DFFCA4005F30E4 /* JRSwizzle.h */; };
+		B67FE2A316DFFCA4005F30E4 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = B67FE2A116DFFCA4005F30E4 /* JRSwizzle.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,18 +64,22 @@
 		24DE9E1011C5FE74003F90F6 /* DkNappSlidemenuModuleAssets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DkNappSlidemenuModuleAssets.m; path = Classes/DkNappSlidemenuModuleAssets.m; sourceTree = "<group>"; };
 		AA747D9E0F9514B9006C5449 /* DkNappSlidemenu_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DkNappSlidemenu_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		B600056816BDA2F80005A1E9 /* IISideController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IISideController.h; sourceTree = "<group>"; };
-		B600056916BDA2F80005A1E9 /* IISideController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IISideController.m; sourceTree = "<group>"; };
-		B600056A16BDA2F80005A1E9 /* IIViewDeckController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IIViewDeckController.h; sourceTree = "<group>"; };
-		B600056B16BDA2F80005A1E9 /* IIViewDeckController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IIViewDeckController.m; sourceTree = "<group>"; };
-		B600056C16BDA2F80005A1E9 /* IIWrapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IIWrapController.h; sourceTree = "<group>"; };
-		B600056D16BDA2F80005A1E9 /* IIWrapController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IIWrapController.m; sourceTree = "<group>"; };
 		B63D51C916C59B8F00D25970 /* DkNappSlidemenuSlideMenuWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DkNappSlidemenuSlideMenuWindow.h; path = Classes/DkNappSlidemenuSlideMenuWindow.h; sourceTree = "<group>"; };
 		B63D51CA16C59B8F00D25970 /* DkNappSlidemenuSlideMenuWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DkNappSlidemenuSlideMenuWindow.m; path = Classes/DkNappSlidemenuSlideMenuWindow.m; sourceTree = "<group>"; };
 		B63D51CB16C59B8F00D25970 /* DkNappSlidemenuSlideMenuWindowProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DkNappSlidemenuSlideMenuWindowProxy.h; path = Classes/DkNappSlidemenuSlideMenuWindowProxy.h; sourceTree = "<group>"; };
 		B63D51CC16C59B8F00D25970 /* DkNappSlidemenuSlideMenuWindowProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DkNappSlidemenuSlideMenuWindowProxy.m; path = Classes/DkNappSlidemenuSlideMenuWindowProxy.m; sourceTree = "<group>"; };
 		B664E7A8164C4DBD00A66625 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B664E7BD164C5CE100A66625 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B67FE28F16DFF995005F30E4 /* TiRootViewController+Extended.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TiRootViewController+Extended.h"; path = "Classes/Ti/TiRootViewController+Extended.h"; sourceTree = "<group>"; };
+		B67FE29016DFF995005F30E4 /* TiRootViewController+Extended.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TiRootViewController+Extended.m"; path = "Classes/Ti/TiRootViewController+Extended.m"; sourceTree = "<group>"; };
+		B67FE29316DFFC93005F30E4 /* IISideController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IISideController.h; path = Classes/ViewDeck/IISideController.h; sourceTree = SOURCE_ROOT; };
+		B67FE29416DFFC93005F30E4 /* IISideController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IISideController.m; path = Classes/ViewDeck/IISideController.m; sourceTree = SOURCE_ROOT; };
+		B67FE29516DFFC93005F30E4 /* IIViewDeckController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IIViewDeckController.h; path = Classes/ViewDeck/IIViewDeckController.h; sourceTree = SOURCE_ROOT; };
+		B67FE29616DFFC93005F30E4 /* IIViewDeckController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IIViewDeckController.m; path = Classes/ViewDeck/IIViewDeckController.m; sourceTree = SOURCE_ROOT; };
+		B67FE29716DFFC93005F30E4 /* IIWrapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IIWrapController.h; path = Classes/ViewDeck/IIWrapController.h; sourceTree = SOURCE_ROOT; };
+		B67FE29816DFFC93005F30E4 /* IIWrapController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IIWrapController.m; path = Classes/ViewDeck/IIWrapController.m; sourceTree = SOURCE_ROOT; };
+		B67FE2A016DFFCA4005F30E4 /* JRSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRSwizzle.h; sourceTree = "<group>"; };
+		B67FE2A116DFFCA4005F30E4 /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSwizzle.m; sourceTree = "<group>"; };
 		D2AAC07E0554694100DB518D /* libDkNappSlidemenu.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDkNappSlidemenu.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -100,7 +108,6 @@
 		0867D691FE84028FC02AAC07 /* nappslidemenu */ = {
 			isa = PBXGroup;
 			children = (
-				B664E79B164C4C8A00A66625 /* ViewDeck */,
 				08FB77AEFE84172EC02AAC07 /* Classes */,
 				32C88DFF0371C24200C91783 /* Other Sources */,
 				0867D69AFE84028FC02AAC07 /* Frameworks */,
@@ -122,6 +129,9 @@
 		08FB77AEFE84172EC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B67FE29F16DFFCA4005F30E4 /* JRSwizzle */,
+				B664E79B164C4C8A00A66625 /* ViewDeck */,
+				B67FE28A16DFF81A005F30E4 /* Ti */,
 				B63D51C916C59B8F00D25970 /* DkNappSlidemenuSlideMenuWindow.h */,
 				B63D51CA16C59B8F00D25970 /* DkNappSlidemenuSlideMenuWindow.m */,
 				B63D51CB16C59B8F00D25970 /* DkNappSlidemenuSlideMenuWindowProxy.h */,
@@ -146,14 +156,33 @@
 		B664E79B164C4C8A00A66625 /* ViewDeck */ = {
 			isa = PBXGroup;
 			children = (
-				B600056816BDA2F80005A1E9 /* IISideController.h */,
-				B600056916BDA2F80005A1E9 /* IISideController.m */,
-				B600056A16BDA2F80005A1E9 /* IIViewDeckController.h */,
-				B600056B16BDA2F80005A1E9 /* IIViewDeckController.m */,
-				B600056C16BDA2F80005A1E9 /* IIWrapController.h */,
-				B600056D16BDA2F80005A1E9 /* IIWrapController.m */,
+				B67FE29316DFFC93005F30E4 /* IISideController.h */,
+				B67FE29416DFFC93005F30E4 /* IISideController.m */,
+				B67FE29516DFFC93005F30E4 /* IIViewDeckController.h */,
+				B67FE29616DFFC93005F30E4 /* IIViewDeckController.m */,
+				B67FE29716DFFC93005F30E4 /* IIWrapController.h */,
+				B67FE29816DFFC93005F30E4 /* IIWrapController.m */,
 			);
 			path = ViewDeck;
+			sourceTree = "<group>";
+		};
+		B67FE28A16DFF81A005F30E4 /* Ti */ = {
+			isa = PBXGroup;
+			children = (
+				B67FE28F16DFF995005F30E4 /* TiRootViewController+Extended.h */,
+				B67FE29016DFF995005F30E4 /* TiRootViewController+Extended.m */,
+			);
+			name = Ti;
+			sourceTree = "<group>";
+		};
+		B67FE29F16DFFCA4005F30E4 /* JRSwizzle */ = {
+			isa = PBXGroup;
+			children = (
+				B67FE2A016DFFCA4005F30E4 /* JRSwizzle.h */,
+				B67FE2A116DFFCA4005F30E4 /* JRSwizzle.m */,
+			);
+			name = JRSwizzle;
+			path = Classes/JRSwizzle;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -166,11 +195,13 @@
 				AA747D9F0F9514B9006C5449 /* DkNappSlidemenu_Prefix.pch in Headers */,
 				24DD6CF91134B3F500162E58 /* DkNappSlidemenuModule.h in Headers */,
 				24DE9E1111C5FE74003F90F6 /* DkNappSlidemenuModuleAssets.h in Headers */,
-				B600056E16BDA2F80005A1E9 /* IISideController.h in Headers */,
-				B600057016BDA2F80005A1E9 /* IIViewDeckController.h in Headers */,
-				B600057216BDA2F80005A1E9 /* IIWrapController.h in Headers */,
 				B63D51CD16C59B8F00D25970 /* DkNappSlidemenuSlideMenuWindow.h in Headers */,
 				B63D51CF16C59B8F00D25970 /* DkNappSlidemenuSlideMenuWindowProxy.h in Headers */,
+				B67FE29116DFF995005F30E4 /* TiRootViewController+Extended.h in Headers */,
+				B67FE29916DFFC93005F30E4 /* IISideController.h in Headers */,
+				B67FE29B16DFFC93005F30E4 /* IIViewDeckController.h in Headers */,
+				B67FE29D16DFFC93005F30E4 /* IIWrapController.h in Headers */,
+				B67FE2A216DFFCA4005F30E4 /* JRSwizzle.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,11 +274,13 @@
 			files = (
 				24DD6CFA1134B3F500162E58 /* DkNappSlidemenuModule.m in Sources */,
 				24DE9E1211C5FE74003F90F6 /* DkNappSlidemenuModuleAssets.m in Sources */,
-				B600056F16BDA2F80005A1E9 /* IISideController.m in Sources */,
-				B600057116BDA2F80005A1E9 /* IIViewDeckController.m in Sources */,
-				B600057316BDA2F80005A1E9 /* IIWrapController.m in Sources */,
 				B63D51CE16C59B8F00D25970 /* DkNappSlidemenuSlideMenuWindow.m in Sources */,
 				B63D51D016C59B8F00D25970 /* DkNappSlidemenuSlideMenuWindowProxy.m in Sources */,
+				B67FE29216DFF995005F30E4 /* TiRootViewController+Extended.m in Sources */,
+				B67FE29A16DFFC93005F30E4 /* IISideController.m in Sources */,
+				B67FE29C16DFFC93005F30E4 /* IIViewDeckController.m in Sources */,
+				B67FE29E16DFFC93005F30E4 /* IIWrapController.m in Sources */,
+				B67FE2A316DFFCA4005F30E4 /* JRSwizzle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

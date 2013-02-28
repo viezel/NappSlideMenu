@@ -7,8 +7,7 @@ NOT WORKING. This module is a work in progress.
 
 ## Description
 
-The NappSlideMenu module extends the Appcelerator Titanium Mobile framework. Its based on Tom Adriaenssen ViewDeck project https://github.com/Inferis/ViewDeck
-
+The NappSlideMenu module extends the Appcelerator Titanium Mobile framework. 
 The module is licensed under the MIT license.
 
 Thanks to `Tom Adriaenssen` for his great work with ViewDeck https://github.com/Inferis/ViewDeck

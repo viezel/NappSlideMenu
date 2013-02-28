@@ -18,6 +18,7 @@ var leftTableView = Ti.UI.createTableView({
 	backgroundColor: 'transparent',
 	rowHeight: 44,
 	width: 320, 
+	height:480,
 	left:0,
 	allowsSelection: true
 });
