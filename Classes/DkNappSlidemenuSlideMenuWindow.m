@@ -14,8 +14,15 @@ UIViewController * ControllerForViewProxy(TiViewProxy * proxy);
 
 UIViewController * ControllerForViewProxy(TiViewProxy * proxy)
 {
-	[[proxy view] setAutoresizingMask:UIViewAutoresizingNone];
-	return [[[TiViewController alloc] initWithViewProxy:(TiViewProxy<TiUIViewController>*)proxy] autorelease];
+    [[proxy view] setAutoresizingMask:UIViewAutoresizingNone];
+    
+    //make the proper resize !
+    TiThreadPerformOnMainThread(^{
+        [proxy windowWillOpen];
+        [proxy reposition];
+        [proxy windowDidOpen];
+    },YES);
+    return [[[TiViewController alloc] initWithViewProxy:(TiViewProxy<TiUIViewController>*)proxy] autorelease];
 }
 
 

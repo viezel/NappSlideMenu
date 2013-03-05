@@ -16,6 +16,8 @@
  http://www.cocoadev.com/index.pl?MethodSwizzling
  https://github.com/rentzsch/jrswizzle
  */
+
+/*
 +(void)load
 {
     NSError *error = nil;
@@ -60,6 +62,6 @@
         [thisNavCon didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     }
 }
-
+*/
 
 @end

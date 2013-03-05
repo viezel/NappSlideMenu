@@ -1,79 +1,60 @@
 
+
+////////////////////////////////////////////////
+//LEFT WINDOW
+var winLeft = Ti.UI.createWindow();
+var leftTableView = Ti.UI.createTableView({
+	data:[{title:'Basic'},{title:'Basic2'}, {title:'Basic3'} ]
+});
+winLeft.add(leftTableView);
+leftTableView.addEventListener("click", function(e){
+	window.toggleLeftView();
+	alert("You clicked " + e.rowData.title + ". Implement menu structure.. ");
+})
+////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////
+// CENTER MAIN WINDOW
 var winCenter = Ti.UI.createWindow({
-	backgroundColor:'yellow',
+	backgroundColor:'#eee',
+	title:"Napp Slide Menu",
 	barColor:"#000"
 });
-
-//LEFT
-var winLeft = Ti.UI.createWindow({
-	backgroundColor:'red'
-});
-var leftView = Ti.UI.createView({
-	width: 320,
-	height:480,
-	backgroundColor:"blue"
-});
-var leftTableView = Ti.UI.createTableView({
-	data:[{title:'Basic'},{title:'Basic2'}, {title:'Basic3'} ],
-	backgroundColor: 'transparent',
-	rowHeight: 44,
-	width: 320, 
-	height:480,
-	left:0,
-	allowsSelection: true
-});
-leftView.add(leftTableView);
-winLeft.add(leftView);
-
-
-
-/// RIGHT
-var winRight = Ti.UI.createWindow({
-	backgroundColor:'white'
-});
-
-//nav buttons
-var leftBtn = Ti.UI.createButton({title:"left"});
+var leftBtn = Ti.UI.createButton({title:"Menu"});
 leftBtn.addEventListener("click", function(){
 	window.toggleLeftView();
 });
-
 var rightBtn = Ti.UI.createButton({title:"right"});
 rightBtn.addEventListener("click", function(){
 	window.toggleRightView();
 });
-
 winCenter.leftNavButton = leftBtn;
 winCenter.rightNavButton = rightBtn;
+////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////
+// RIGHT WINDOW
+var winRight = Ti.UI.createWindow({
+	backgroundColor:'white'
+});
+////////////////////////////////////////////////
 
 
 
+
+////////////////////////////////////////////////
+// NappSlideMenu WINDOW
 var NappSlideMenu = require('dk.napp.slidemenu');
-Ti.API.info("module is => " + NappSlideMenu);
-
 var navController = Ti.UI.iPhone.createNavigationGroup({
 	window : winCenter
 });
-
-
-
-
 var window = NappSlideMenu.createSlideMenuWindow({
 	centerWindow:navController,
 	leftWindow:winLeft,
 	rightWindow:winRight,
 	leftLedge:100
 });
-window.open();
-
-/*
-setTimeout(function(){
-	//window.toggleLeftView();
-},1500);
-
-setTimeout(function(){
-	//window.bounceLeftView();
-	var newWin = Ti.UI.createWindow({backgroundColor:"blue"});
-	navController.open(newWin);
-},3500);
-*/
+window.open(); //init the app
+////////////////////////////////////////////////

@@ -1,10 +1,5 @@
 # NappSlideMenu Module
 
-## Status
-
-NOT WORKING. This module is a work in progress.
-
-
 ## Description
 
 The NappSlideMenu module extends the Appcelerator Titanium Mobile framework. 
@@ -18,12 +13,47 @@ Thanks to `Tom Adriaenssen` for his great work with ViewDeck https://github.com/
 Simply add the following lines to your `tiapp.xml` file:
     
     <modules>
-        <module version="0.1" platform="iphone">dk.napp.slidemenu</module> 
+        <module platform="iphone">dk.napp.slidemenu</module> 
     </modules>
 
 ## Reference
 
 For more detailed code examples take a look into the example app
+
+
+### centerWindow, leftWindow, rightWindow
+
+NappSlideMenu does not require you to use the 3 windows. You can also use either the combo of center/left or center/right for your desired needs. 
+
+
+### leftLedge, rightLedge (optinal)
+
+Ledge is used to define the maximum amount the view can be opened. Default is `65` if no number is defined. 
+
+	var window = NappSlideMenu.createSlideMenuWindow({
+		centerWindow:navController,
+		leftWindow:winLeft,
+		rightWindow:winRight,
+		leftLedge:100
+	});
+	
+
+## API Methods
+
+### toggleLeftView, toggleRightView
+
+toggleLeftView() and toggleRightView() are used to toggle each visibility of either the left or right window. 
+
+### toggleOpenView
+
+toggleOpenView() toggles the open window. Good to reset NappSlideMenu if we do not know which view is open. 
+
+
+### bounceLeftView, bounceRightView, bounceTopView, bounceBottomView
+
+A small animation to show the app user that its possible to interact with the NappSlideMenu.
+	
+	
 
 ## Author
 
@@ -35,7 +65,7 @@ twitter: @nappdev
 
 ## License
 
-    Copyright (c) 2010-2011 Mads Møller
+    Copyright (c) 2010-2013 Mads Møller
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
