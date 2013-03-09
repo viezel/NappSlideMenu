@@ -127,7 +127,7 @@ UIViewController * ControllerForViewProxy(TiViewProxy * proxy)
     [controller toggleOpenView];
 }
 
-//Properties
+// Properties
 - (void)setPanningMode_:(id)args
 {
     /*
@@ -160,21 +160,11 @@ UIViewController * ControllerForViewProxy(TiViewProxy * proxy)
     }
 }
 
-
-
-
-/*
-
-// applies a small shadow
-- (void)viewDeckController:(IIViewDeckController *)viewDeckController applyShadow:(CALayer *)shadowLayer withBounds:(CGRect)rect {
-    shadowLayer.masksToBounds = NO;
-    shadowLayer.shadowRadius = 5;
-    shadowLayer.shadowOpacity = 0.9;
-    shadowLayer.shadowColor = [[UIColor blackColor] CGColor];
-    shadowLayer.shadowOffset = CGSizeZero;
-    shadowLayer.shadowPath = [[UIBezierPath bezierPathWithRect:rect] CGPath];
+-(void)setCenterWindow_:(id)args
+{
+	ENSURE_UI_THREAD(setCenterWindow_, args);
+	ENSURE_SINGLE_ARG(args, TiViewProxy);
+	[controller setCenterController: ControllerForViewProxy(args)];
 }
-*/
-
 
 @end
