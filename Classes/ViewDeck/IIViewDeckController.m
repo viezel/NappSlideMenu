@@ -229,6 +229,7 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
 @implementation IIViewDeckController
 
 @synthesize panningMode = _panningMode;
+@synthesize panningCancelsTouchesInView = _panningCancelsTouchesInView;
 @synthesize panners = _panners;
 @synthesize referenceView = _referenceView;
 @synthesize slidingController = _slidingController;
@@ -259,6 +260,7 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
 @synthesize bounceOpenSideDurationFactor = _bounceOpenSideDurationFactor;
 @synthesize openSlideAnimationDuration = _openSlideAnimationDuration;
 @synthesize closeSlideAnimationDuration = _closeSlideAnimationDuration;
+@synthesize parallaxAmount = _parallaxAmount;
 
 #pragma mark - Initalisation and deallocation
 
@@ -277,6 +279,7 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
         _elastic = YES;
         _willAppearShouldArrangeViewsAfterRotation = (UIInterfaceOrientation)UIDeviceOrientationUnknown;
         _panningMode = IIViewDeckFullViewPanning;
+        _panningCancelsTouchesInView = NO;
         _navigationControllerBehavior = IIViewDeckNavigationControllerContained;
         _centerhiddenInteractivity = IIViewDeckCenterHiddenUserInteractive;
         _sizeMode = IIViewDeckLedgeSizeMode;
@@ -530,6 +533,9 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
     self.slidingControllerView.frame = [self slidingRectForOffset:_offset forOrientation:orientation];
     if (beforeOffset != _offset)
         [self notifyDidChangeOffset:_offset orientation:orientation panning:panning];
+    
+    
+    [self setParallax];
 }
 
 - (void)hideAppropriateSideViews {
@@ -937,6 +943,35 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
     [self relayRotationMethod:^(UIViewController *controller) {
         [controller willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
     }];
+
+    CABasicAnimation* anim = nil;
+    // only animate shadow if we've applied it ourselves.
+    if ([self.delegate respondsToSelector:@selector(viewDeckController:applyShadow:withBounds:)]) {
+        for (NSString* key in self.slidingControllerView.layer.animationKeys) {
+            if ([key isEqualToString:@"bounds"]) {
+                CABasicAnimation* other = (CABasicAnimation*)[self.slidingControllerView.layer animationForKey:key];
+                
+                if ([other isKindOfClass:[CABasicAnimation class]]) {
+                    anim = [CABasicAnimation animationWithKeyPath:@"shadowPath"];
+                    anim.fromValue = (__bridge id)[UIBezierPath bezierPathWithRect:[other.fromValue CGRectValue]].CGPath;
+                    anim.duration = other.duration;
+                    anim.timingFunction = other.timingFunction;
+                    break;
+                }
+            }
+        }
+    }
+    
+    // fallback: make shadow transparent and fade in to desired value. This gives the same visual
+    // effect as animating 
+    if (!anim) {
+        anim = [CABasicAnimation animationWithKeyPath:@"shadowOpacity"];
+        anim.fromValue = @(0.0);
+        anim.duration = 1;
+        anim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    }
+    [self.slidingControllerView.layer addAnimation:anim forKey:@"shadowOpacity"];
+
 }
 
 
@@ -965,7 +1000,7 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
 }
 
 - (void)arrangeViewsAfterRotation {
-    _willAppearShouldArrangeViewsAfterRotation = UIDeviceOrientationUnknown;
+    _willAppearShouldArrangeViewsAfterRotation = (UIInterfaceOrientation)UIDeviceOrientationUnknown;
     if (_preRotationSize.width <= 0 || _preRotationSize.height <= 0) return;
     
     CGFloat offset, max, preSize;
@@ -1231,6 +1266,18 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
 
 #pragma mark - controller state
 
+-(void)setCenterhiddenInteractivity:(IIViewDeckCenterHiddenInteractivity)centerhiddenInteractivity {
+    _centerhiddenInteractivity = centerhiddenInteractivity;
+    
+    if ([self isAnySideOpen]) {
+        if (IIViewDeckCenterHiddenIsInteractive(self.centerhiddenInteractivity)) {
+            [self centerViewVisible];
+        } else {
+            [self centerViewHidden];
+        }
+    }
+}
+
 - (BOOL)isSideClosed:(IIViewDeckSide)viewDeckSide {
     if (![self controllerForSide:viewDeckSide])
         return YES;
@@ -1376,7 +1423,7 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
             [self centerViewHidden];
             // run block if it's defined
             if (bounced) bounced(self);
-            [self performDelegate:@selector(viewDeckController:didBounceViewSide:openingController:) side:side controller:self.leftController];
+            [self performDelegate:@selector(viewDeckController:didBounceViewSide:openingController:) side:side controller:_controllers[side]];
             
             // now slide the view back to the ledge position
             [UIView animateWithDuration:[self openSlideDuration:YES]*shortFactor delay:0 options:UIViewAnimationCurveEaseInOut | UIViewAnimationOptionLayoutSubviews | UIViewAnimationOptionBeginFromCurrentState animations:^{
@@ -1462,7 +1509,7 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
     } completion:^(BOOL finished) {
         // run block if it's defined
         if (bounced) bounced(self);
-        [self performDelegate:@selector(viewDeckController:didBounceViewSide:closingController:) side:side controller:self.leftController];
+        [self performDelegate:@selector(viewDeckController:didBounceViewSide:closingController:) side:side controller:_controllers[side]];
         
         [UIView animateWithDuration:[self closeSlideDuration:YES]*longFactor delay:0 options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionLayoutSubviews animations:^{
             [self setSlidingFrameForOffset:0 forOrientation:IIViewDeckOffsetOrientationFromIIViewDeckSide(side)];
@@ -1794,8 +1841,13 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
     }
     
     UIViewController *previewController = [self controllerForSide:viewDeckSide];
+    NSString *keyPath = @"position.x";
     
-    CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"position.x"];
+    if (viewDeckSide == IIViewDeckBottomSide || viewDeckSide == IIViewDeckTopSide) {
+        keyPath = @"position.y";
+    }
+    
+    CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:keyPath];
     animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     animation.duration = duration;
     animation.values = animationValues;
@@ -2211,6 +2263,8 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
 }
 
 - (void)panned:(UIPanGestureRecognizer*)panner orientation:(IIViewDeckOffsetOrientation)orientation {
+    [self setParallax];
+    
     CGFloat pv, m;
     IIViewDeckSide minSide, maxSide;
     if (orientation == IIViewDeckHorizontalOrientation) {
@@ -2267,7 +2321,17 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
         }
     }
     
-    [self panToSlidingFrameForOffset:v forOrientation:orientation];
+    // Check for an in-flight bounce animation
+    CAKeyframeAnimation *bounceAnimation = (CAKeyframeAnimation *)[self.slidingControllerView.layer animationForKey:@"previewBounceAnimation"];
+    if (bounceAnimation != nil) {
+        self.slidingControllerView.frame = [[self.slidingControllerView.layer presentationLayer] frame];
+        [self.slidingControllerView.layer removeAnimationForKey:@"previewBounceAnimation"];
+        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionLayoutSubviews | UIViewAnimationOptionBeginFromCurrentState animations:^{
+            [self panToSlidingFrameForOffset:v forOrientation:orientation];
+        } completion:nil];
+    } else {
+        [self panToSlidingFrameForOffset:v forOrientation:orientation];
+    }
     
     if (panner.state == UIGestureRecognizerStateEnded ||
         panner.state == UIGestureRecognizerStateCancelled ||
@@ -2330,12 +2394,33 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
     [self notifyDidOpenSide:openSide animated:NO];
 }
 
+- (void) setParallax {
+    if(_parallaxAmount <= 0.0) return;
+    
+    self.leftController.view.frame = [self getLeftParallax];
+    self.rightController.view.frame = [self getRightParallax];
+}
+
+- (CGRect) getLeftParallax {
+    CGFloat pv = self.slidingControllerView.frame.origin.x;
+    CGFloat diff = pv-(self.slidingControllerView.frame.size.width-_ledge[IIViewDeckLeftSide]);
+    
+    return CGRectMake(diff*_parallaxAmount, self.leftController.view.frame.origin.y, self.leftController.view.frame.size.width, self.leftController.view.frame.size.height);
+}
+
+- (CGRect) getRightParallax {
+    CGFloat pv = self.slidingControllerView.frame.origin.x;
+    CGFloat diff = pv+(self.slidingControllerView.frame.size.width-_ledge[IIViewDeckRightSide]);
+    
+    return CGRectMake(diff*_parallaxAmount, self.rightController.view.frame.origin.y, self.rightController.view.frame.size.width, self.rightController.view.frame.size.height);
+}
+
 
 - (void)addPanner:(UIView*)view {
     if (!view) return;
     
     UIPanGestureRecognizer* panner = II_AUTORELEASE([[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panned:)]);
-    panner.cancelsTouchesInView = YES;
+    panner.cancelsTouchesInView = _panningCancelsTouchesInView;
     panner.delegate = self;
     [view addGestureRecognizer:panner];
     [self.panners addObject:panner];
@@ -2988,7 +3073,6 @@ static const char* viewDeckControllerKey = "ViewDeckController";
 }
 
 + (void)load {
-    [super load];
     [self vdc_swizzle];
 }
 
