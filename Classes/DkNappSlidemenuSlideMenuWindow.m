@@ -1,8 +1,10 @@
 /**
- * Appcelerator Titanium Mobile
- * Copyright (c) 2009-2012 by Appcelerator, Inc. All Rights Reserved.
- * Licensed under the terms of the Apache Public License
- * Please see the LICENSE included with this distribution for details.
+ * Module developed by Napp ApS
+ * www.napp.dk
+ * Mads Møller
+ *
+ * Appcelerator Titanium is Copyright (c) 2009-2010 by Appcelerator, Inc.
+ * and licensed under the Apache Public License (version 2)
  */
 #import "TiBase.h"
 #import "DkNappSlidemenuSlideMenuWindow.h"
@@ -66,11 +68,11 @@ UIViewController * ControllerForViewProxy(TiViewProxy * proxy)
             NSLog(@"NappSlideMenu ERROR: No windows assigned");
             return nil;
         }
-               
+        
         //setting the ledge
         [controller setLeftSize:leftLedge];
         [controller setRightSize:rightLedge];
-        
+
         [controller setDelegate:(DkNappSlidemenuSlideMenuWindowProxy *)[self proxy]];
         
         UIView * controllerView = [controller view];
@@ -90,7 +92,9 @@ UIViewController * ControllerForViewProxy(TiViewProxy * proxy)
 }
 
 
-//API
+////////////////////////////////////////
+// Methods
+////////////////////////////////////////
 -(void)toggleLeftView:(id)args
 {
     ENSURE_UI_THREAD(toggleLeftView,args);
@@ -127,7 +131,25 @@ UIViewController * ControllerForViewProxy(TiViewProxy * proxy)
     [controller toggleOpenView];
 }
 
+/* - NOT WORKING
+-(NSNumber *)canRightViewPushViewControllerOverCenterController:(id)args
+{
+    NSString *className = NSStringFromClass([controller.centerController class]);
+    NSLog(@"%@", className );
+    return [controller.centerController isKindOfClass:[UINavigationController class]] ? NUMBOOL(YES) : NUMBOOL(NO);
+}
+
+-(void)rightViewPushViewControllerOverCenterController:(id)args
+{
+    ENSURE_UI_THREAD(rightViewPushViewControllerOverCenterController, args);
+	ENSURE_SINGLE_ARG(args, TiViewProxy);
+    [controller rightViewPushViewControllerOverCenterController:ControllerForViewProxy(args)];
+}
+*/
+
+////////////////////////////////////////
 // Properties
+////////////////////////////////////////
 - (void)setPanningMode_:(id)args
 {
     /*
@@ -166,5 +188,42 @@ UIViewController * ControllerForViewProxy(TiViewProxy * proxy)
 	ENSURE_SINGLE_ARG(args, TiViewProxy);
 	[controller setCenterController: ControllerForViewProxy(args)];
 }
+
+-(void)setLeftWindow_:(id)args
+{
+	ENSURE_UI_THREAD(setLeftWindow_, args);
+	ENSURE_SINGLE_ARG(args, TiViewProxy);
+	[controller setLeftController:ControllerForViewProxy(args)];
+}
+
+-(void)setRightWindow_:(id)args
+{
+	ENSURE_UI_THREAD(setRightWindow_, args);
+	ENSURE_SINGLE_ARG(args, TiViewProxy);
+	[controller setRightController:ControllerForViewProxy(args)];
+}
+
+-(void)setLeftLedge_:(id)args
+{
+	ENSURE_UI_THREAD(setLeftLedge_, args);
+	ENSURE_SINGLE_ARG(args, NSNumber);
+	[controller setLeftSize:[TiUtils floatValue:args]];
+}
+
+-(void)setRightLedge_:(id)args
+{
+	ENSURE_UI_THREAD(setRightLedge_, args);
+	ENSURE_SINGLE_ARG(args, NSNumber);
+	[controller setRightSize:[TiUtils floatValue:args]];
+}
+
+-(void)setParallaxAmount_:(id)args
+{
+    ENSURE_UI_THREAD(setParallaxAmount_, args);
+	ENSURE_SINGLE_ARG(args, NSNumber);
+    [controller setParallaxAmount:[TiUtils floatValue:args]];
+}
+
+
 
 @end

@@ -1,5 +1,7 @@
 /**
- * Your Copyright Here
+ * Module developed by Napp ApS
+ * www.napp.dk
+ * Mads Møller
  *
  * Appcelerator Titanium is Copyright (c) 2009-2010 by Appcelerator, Inc.
  * and licensed under the Apache Public License (version 2)
@@ -82,25 +84,6 @@
 		// been removed, we can optionally clean up any resources
 		// since no body is listening at this point for that event
 	}
-}
-
-#pragma Public APIs
-
--(id)example:(id)args
-{
-	// example method
-	return @"hello world";
-}
-
--(id)exampleProp
-{
-	// example property getter
-	return @"hello world";
-}
-
--(void)setExampleProp:(id)value
-{
-	// example property setter
 }
 
 @end
