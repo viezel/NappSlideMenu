@@ -79,7 +79,8 @@ A small animation to show the app user that its possible to interact with the Na
 
 ### setParallaxAmount
 
-Parallax is the ammount of parallax between the centerWindow and a sideWindow. Set a value between 0 and 1. 
+Parallax is the amount of parallax between the centerWindow and a sideWindow animation. Set a value between 0 and 1. 
+Its a very cool effect. Play with the slider in the example code to see the effect!
 
 	mainWindow.setParallaxAmount(0.3);
 
