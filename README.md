@@ -53,7 +53,13 @@ toggleOpenView() toggles the open window. Good to reset NappSlideMenu if we do n
 
 A small animation to show the app user that its possible to interact with the NappSlideMenu.
 	
-	
+### setCenterWindow
+
+A method that allows change the centerWindow of controller.
+
+	mainWindow.setCenterWindow(Ti.UI.createWindow({
+		backgroundColor: "#FF0000"
+	});	
 
 ## Author
 
