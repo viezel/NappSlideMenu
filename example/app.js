@@ -54,10 +54,14 @@ function createCenterNavWindow(){
 	var leftBtn = Ti.UI.createButton({title:"Menu"});
 	leftBtn.addEventListener("click", function(){
 		window.toggleLeftView();
+		window.setCenterhiddenInteractivity("TouchDisabledWithTapToCloseBouncing");
+		window.setPanningMode("NavigationBarPanning");
 	});
 	var rightBtn = Ti.UI.createButton({title:"right"});
 	rightBtn.addEventListener("click", function(){
 		window.toggleRightView();
+		window.setCenterhiddenInteractivity("TouchEnabled");
+		window.setPanningMode("NoPanning");
 	});
 	win.leftNavButton = leftBtn;
 	win.rightNavButton = rightBtn;
@@ -122,5 +126,6 @@ var window = NappSlideMenu.createSlideMenuWindow({
 	rightWindow:winRight,
 	leftLedge:100
 });
+
 window.open(); //init the app
 ////////////////////////////////////////////////

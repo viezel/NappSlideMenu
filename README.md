@@ -59,6 +59,36 @@ Update the ledge numbers with these methods.
 	mainWindow.setLeftLedge(120);
 
 
+### setCenterhiddenInteractivity
+
+Set different types of interactivity for the centerWindow when either leftWindow or rightWindow is open. 
+```javascript
+mainWindow.setCenterhiddenInteractivity("TouchEnabled");
+```
+
+| input (string) | Description | 
+| ----- | ----------- |
+| TouchEnabled | the centerWindow stays interactive | 
+| TouchDisabled | the centerWindow will become nonresponsive to useractions | 
+| TouchDisabledWithTapToClose | the centerWindow will become nonresponsive to useractions, but will allow the user to tap it so that it closes | 
+| TouchDisabledWithTapToCloseBouncing | same as TouchDisabledWithTapToClose, but closes the center view bouncing | 
+
+### setPanningMode
+
+Set the panning mode (drag animation).
+
+```javascript
+mainWindow.setPanningMode("NoPanning");
+```
+
+| input (string) | Description | 
+| ----- | ----------- |
+| NoPanning | No panning allowed | 
+| FullViewPanning | Default behavior: Touch anywhere in the center view to drag the center view around | 
+| NavigationBarPanning | Panning only occurs when you start touching in the navigation bar (when the center controller is a UINavigationController with a visible navigation bar). Otherwise it will behave as IIViewDeckNoPanning. | 
+| NavigationBarOrOpenCenterPanning | Panning occurs when you start touching the navigation bar if the centerWindow is visible.  If the left or right controller is open, pannning occurs anywhere on the center controller, not just the navbar. | 
+
+
 ## API Methods
 
 ### toggleLeftView, toggleRightView
@@ -86,6 +116,11 @@ Its a very cool effect. Play with the slider in the example code to see the effe
 
 
 ## Changelog
+
+**v1.1**  
+Added setCenterhiddenInteractivity().  
+Added setPanningMode().  
+
 
 **v1.0**  
 Updated ViewDeck to newest version (2.2.4).  

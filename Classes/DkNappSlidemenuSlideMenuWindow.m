@@ -152,34 +152,42 @@ UIViewController * ControllerForViewProxy(TiViewProxy * proxy)
 ////////////////////////////////////////
 - (void)setPanningMode_:(id)args
 {
-    /*
-    IIViewDeckNoPanning,              // no panning allowed
-    IIViewDeckFullViewPanning,        // the default: touch anywhere in the center view to drag the center view around
-    IIViewDeckNavigationBarPanning,   // panning only occurs when you start touching in the navigation bar (when the center controller is a UINavigationController with a visible navigation bar). Otherwise it will behave as IIViewDeckNoPanning.
-    IIViewDeckPanningViewPanning      // panning only occurs when you start touching in a UIView set in panningView property
-     */
-
     ENSURE_UI_THREAD(setPanningMode_,args);
-    if(args !=nil){
-        int num = [TiUtils intValue:args];
-        switch(num){
-            case 1:
-                [controller setPanningMode:IIViewDeckNoPanning];
-                break;
-            case 2:
-                [controller setPanningMode:IIViewDeckFullViewPanning];
-                break;
-            case 3:
-                [controller setPanningMode:IIViewDeckNavigationBarPanning];
-                break;
-            case 4:
-                [controller setPanningMode:IIViewDeckPanningViewPanning];
-                break;
-            default:
-                [controller setPanningMode:IIViewDeckPanningViewPanning];
-                break;
-        }
-    }
+    ENSURE_SINGLE_ARG(args, NSString);
+    NSString *string = [TiUtils stringValue:args];
+    NSDictionary *mapping = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithInteger:0],@"NoPanning",
+                             [NSNumber numberWithInteger:1],@"FullViewPanning",
+                             [NSNumber numberWithInteger:2],@"NavigationBarPanning",
+                             [NSNumber numberWithInteger:3],@"PanningViewPanning",
+                             [NSNumber numberWithInteger:4],@"DelegatePanning",
+                             [NSNumber numberWithInteger:5],@"NavigationBarOrOpenCenterPanning",
+                             nil];
+    //NSLog(@"NAPP SLIDE MENU setPanningMode %i", [[mapping  objectForKey:string] intValue]);
+    [controller setPanningMode:[[mapping  objectForKey:string] intValue]];
+
+    /*
+    NSLog(@"IIViewDeckNoPanning %i", IIViewDeckNoPanning);
+    NSLog(@"IIViewDeckFullViewPanning %i", IIViewDeckFullViewPanning);
+    NSLog(@"IIViewDeckNavigationBarPanning %i", IIViewDeckNavigationBarPanning);
+    NSLog(@"IIViewDeckPanningViewPanning %i", IIViewDeckPanningViewPanning);
+    NSLog(@"IIViewDeckDelegatePanning %i", IIViewDeckDelegatePanning);
+    NSLog(@"IIViewDeckNavigationBarOrOpenCenterPanning %i", IIViewDeckNavigationBarOrOpenCenterPanning);*/
+
+}
+
+-(void)setCenterhiddenInteractivity_:(id)args
+{
+    ENSURE_UI_THREAD(setCenterhiddenInteractivity_, args);
+    ENSURE_SINGLE_ARG(args, NSString);
+    NSString *string = [TiUtils stringValue:args];
+    NSDictionary *mapping = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithInteger:0],@"TouchEnabled",
+                             [NSNumber numberWithInteger:1],@"TouchDisabled",
+                             [NSNumber numberWithInteger:2],@"TouchDisabledWithTapToClose",
+                             [NSNumber numberWithInteger:3],@"TouchDisabledWithTapToCloseBouncing",
+                            nil];
+    [controller setCenterhiddenInteractivity:[[mapping  objectForKey:string] intValue]];
 }
 
 -(void)setCenterWindow_:(id)args

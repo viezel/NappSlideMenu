@@ -27,7 +27,7 @@ UIViewController * NappControllerForProxy(TiViewProxy * proxy);
 -(void)bounceTopView:(id)args;
 -(void)bounceBottomView:(id)args;
 -(void)toggleOpenView:(id)args;
--(void)rightViewPushViewControllerOverCenterController:(id)args;
--(NSNumber *)canRightViewPushViewControllerOverCenterController:(id)args;
+//-(void)rightViewPushViewControllerOverCenterController:(id)args;
+//-(NSNumber *)canRightViewPushViewControllerOverCenterController:(id)args;
 
 @end
