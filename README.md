@@ -11,7 +11,11 @@ Thanks to `Tom Adriaenssen` for his great work with ViewDeck https://github.com/
 ![NappSlideMenu](https://raw.github.com/viezel/NappSlideMenu/master/documentation/slidemenu.png) 
 ![NappSlideMenu-left](https://raw.github.com/viezel/NappSlideMenu/master/documentation/slidemenu-left.png)
 
-## Referencing the module in your Titanium Mobile application ##
+### Get the module
+
+**Find the newest version in the dist folder**
+
+## Referencing the module in your Titanium Mobile application 
 
 Simply add the following lines to your `tiapp.xml` file:
     
@@ -19,7 +23,6 @@ Simply add the following lines to your `tiapp.xml` file:
         <module platform="iphone">dk.napp.slidemenu</module> 
     </modules>
 
-**Find the newest version in the dist folder**
 
 ## Reference
 
@@ -32,32 +35,33 @@ NappSlideMenu does not require you to use the 3 windows. You can also use either
 ### leftLedge, rightLedge (optinal)
 
 Ledge is used to define the maximum amount the view can be opened. Default is `65` if no number is defined. 
-
-	var window = NappSlideMenu.createSlideMenuWindow({
-		centerWindow:navController,
-		leftWindow:winLeft,
-		rightWindow:winRight,
-		leftLedge:100
-	});
-	
+```javascript
+var window = NappSlideMenu.createSlideMenuWindow({
+	centerWindow:navController,
+	leftWindow:winLeft,
+	rightWindow:winRight,
+	leftLedge:100
+});
+```	
 
 ## API Properties
 	
 ### setCenterWindow, setLeftWindow, setRightWindow
 
 A method that allow change of the centerWindow. You can either use a window or a navigation group. 
-	
-	var newWin = Ti.UI.createWindow({
-		backgroundColor: "#FF0000"
-	};
-	mainWindow.setCenterWindow(newWin);	
+```javascript	
+var newWin = Ti.UI.createWindow({
+	backgroundColor: "#FF0000"
+};
+mainWindow.setCenterWindow(newWin);	
+```
 
 ### setLeftLedge, setRightLedge
 
 Update the ledge numbers with these methods. 
-
-	mainWindow.setLeftLedge(120);
-
+```javascript
+mainWindow.setLeftLedge(120);
+```
 
 ### setCenterhiddenInteractivity
 
@@ -111,9 +115,9 @@ A small animation to show the app user that its possible to interact with the Na
 
 Parallax is the amount of parallax between the centerWindow and a sideWindow animation. Set a value between 0 and 1. 
 Its a very cool effect. Play with the slider in the example code to see the effect!
-
-	mainWindow.setParallaxAmount(0.3);
-
+```javascript
+mainWindow.setParallaxAmount(0.3);
+```
 
 ## Events
 
@@ -122,22 +126,27 @@ Its a very cool effect. Play with the slider in the example code to see the effe
 When leftWindow or rightWindow will be opened, this event is fired with the *view* event parameter.
 
 Here, you can block centerWindow, for example.
-
-	mainWindow.addEventListener("viewWillOpen", function(e) {
-		this.setCenterhiddenInteractivity("TouchDisabledWithTapToClose");
-	});
+```javascript
+mainWindow.addEventListener("viewWillOpen", function(e) {
+	this.setCenterhiddenInteractivity("TouchDisabledWithTapToClose");
+});
+```
 
 ### viewWillClose
 
 When leftWindow or rightWindow will be closed, this event is fired with the *view* event parameter.
 
 Here, you can blur a searchBar in leftWindow, for example.
-
-	mainWindow.addEventListener("viewWillClose", function(e) {
-		this.setCenterhiddenInteractivity("TouchEnabled");
-	});
+```javascript
+mainWindow.addEventListener("viewWillClose", function(e) {
+	this.setCenterhiddenInteractivity("TouchEnabled");
+});
+```
 
 ## Changelog
+
+**v1.2**  
+Added viewWillClose and viewWillOpen eventlisteners.   
 
 **v1.1**  
 Added setCenterhiddenInteractivity().  
@@ -167,6 +176,10 @@ web: http://www.napp.dk
 email: mm@napp.dk  
 twitter: @nappdev  
 
+## Contributors
+
+**Rafael K. Streit**  
+twitter: @rafaelks
 
 ## License
 

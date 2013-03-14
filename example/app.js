@@ -127,5 +127,16 @@ var window = NappSlideMenu.createSlideMenuWindow({
 	leftLedge:100
 });
 
+window.addEventListener("viewWillOpen", function(e) {
+	Ti.API.info(e.view + "Window will open");
+	//window.setCenterhiddenInteractivity("TouchDisabledWithTapToClose");
+});
+
+window.addEventListener("viewWillClose", function(e) {
+	Ti.API.info(e.view + "Window will close");
+	//window.setCenterhiddenInteractivity("TouchEnabled");
+});
+
 window.open(); //init the app
+
 ////////////////////////////////////////////////
