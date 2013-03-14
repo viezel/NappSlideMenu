@@ -36,7 +36,7 @@ NappSlideMenu does not require you to use the 3 windows. You can also use either
 
 Ledge is used to define the maximum amount the view can be opened. Default is `65` if no number is defined. 
 ```javascript
-var window = NappSlideMenu.createSlideMenuWindow({
+var mainWindow = NappSlideMenu.createSlideMenuWindow({
 	centerWindow:navController,
 	leftWindow:winLeft,
 	rightWindow:winRight,
