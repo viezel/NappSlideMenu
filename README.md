@@ -117,23 +117,23 @@ Its a very cool effect. Play with the slider in the example code to see the effe
 
 ## Events
 
-### viewOpened
+### viewWillOpen
 
-When leftWindow or rightWindow is opened, this event is fired with the *view* event parameter.
+When leftWindow or rightWindow will be opened, this event is fired with the *view* event parameter.
 
 Here, you can block centerWindow, for example.
 
-	mainWindow.addEventListener("viewOpened", function(e) {
+	mainWindow.addEventListener("viewWillOpen", function(e) {
 		this.setCenterhiddenInteractivity("TouchDisabledWithTapToClose");
 	});
 
-### viewClosed
+### viewWillClose
 
-When leftWindow or rightWindow is closed, this event is fired with the *view* event parameter.
+When leftWindow or rightWindow will be closed, this event is fired with the *view* event parameter.
 
 Here, you can blur a searchBar in leftWindow, for example.
 
-	mainWindow.addEventListener("viewClosed", function(e) {
+	mainWindow.addEventListener("viewWillClose", function(e) {
 		this.setCenterhiddenInteractivity("TouchEnabled");
 	});
 

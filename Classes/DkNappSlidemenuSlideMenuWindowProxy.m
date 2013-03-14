@@ -41,8 +41,8 @@
 		viewOpened = @"left";
 	}
 	
-	if ([self _hasListeners:@"viewOpened"]) {
-		[self fireEvent:@"viewOpened" withObject:@{
+	if ([self _hasListeners:@"viewWillOpen"]) {
+		[self fireEvent:@"viewWillOpen" withObject:@{
 			@"view": viewOpened
 		 } propagate:YES];
 	}
@@ -58,8 +58,8 @@
 		viewClosed = @"left";
 	}
 	
-	if ([self _hasListeners:@"viewClosed"]) {
-		[self fireEvent:@"viewClosed" withObject:@{
+	if ([self _hasListeners:@"viewWillClose"]) {
+		[self fireEvent:@"viewWillClose" withObject:@{
 			@"view": viewClosed
 		 } propagate:YES];
 	}
