@@ -29,28 +29,73 @@
 }
 
 
-//API
+# pragma ViewDeck Delegates
+
+- (void)viewDeckController:(IIViewDeckController*)viewDeckController willOpenViewSide:(IIViewDeckSide)viewDeckSide animated:(BOOL)animated
+{
+	NSString *viewOpened;
+	
+	if (viewDeckSide == IIViewDeckRightSide) {
+		viewOpened = @"right";
+	} else if (viewDeckSide == IIViewDeckLeftSide) {
+		viewOpened = @"left";
+	}
+	
+	if ([self _hasListeners:@"viewWillOpen"]) {
+		[self fireEvent:@"viewWillOpen" withObject:@{
+			@"view": viewOpened
+		 } propagate:YES];
+	}
+}
+
+- (void)viewDeckController:(IIViewDeckController *)viewDeckController willCloseViewSide:(IIViewDeckSide)viewDeckSide animated:(BOOL)animated
+{
+	NSString *viewClosed;
+	
+	if (viewDeckSide == IIViewDeckRightSide) {
+		viewClosed = @"right";
+	} else if (viewDeckSide == IIViewDeckLeftSide) {
+		viewClosed = @"left";
+	}
+	
+	if ([self _hasListeners:@"viewWillClose"]) {
+		[self fireEvent:@"viewWillClose" withObject:@{
+			@"view": viewClosed
+		 } propagate:YES];
+	}
+}
+
+
+# pragma API
+
 -(void)toggleLeftView:(id)args {
     TiThreadPerformOnMainThread(^{[(DkNappSlidemenuSlideMenuWindow*)[self view] toggleLeftView:args];}, NO);
 }
+
 -(void)toggleRightView:(id)args {
     TiThreadPerformOnMainThread(^{[(DkNappSlidemenuSlideMenuWindow*)[self view] toggleRightView:args];}, NO);
 }
+
 -(void)bounceLeftView:(id)args {
     TiThreadPerformOnMainThread(^{[(DkNappSlidemenuSlideMenuWindow*)[self view] bounceLeftView:args];}, NO);
 }
+
 -(void)bounceRightView:(id)args {
     TiThreadPerformOnMainThread(^{[(DkNappSlidemenuSlideMenuWindow*)[self view] bounceRightView:args];}, NO);
 }
+
 -(void)bounceTopView:(id)args {
     TiThreadPerformOnMainThread(^{[(DkNappSlidemenuSlideMenuWindow*)[self view] bounceTopView:args];}, NO);
 }
+
 -(void)bounceBottomView:(id)args {
     TiThreadPerformOnMainThread(^{[(DkNappSlidemenuSlideMenuWindow*)[self view] bounceBottomView:args];}, NO);
 }
+
 -(void)toggleOpenView:(id)args {
     TiThreadPerformOnMainThread(^{[(DkNappSlidemenuSlideMenuWindow*)[self view] toggleOpenView:args];}, NO);
 }
+
 /* - NOT WORKING
 -(void)rightViewPushViewControllerOverCenterController:(id)args {
     TiThreadPerformOnMainThread(^{[(DkNappSlidemenuSlideMenuWindow*)[self view] rightViewPushViewControllerOverCenterController:args];}, NO);

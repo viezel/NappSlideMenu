@@ -115,6 +115,28 @@ Its a very cool effect. Play with the slider in the example code to see the effe
 	mainWindow.setParallaxAmount(0.3);
 
 
+## Events
+
+### viewWillOpen
+
+When leftWindow or rightWindow will be opened, this event is fired with the *view* event parameter.
+
+Here, you can block centerWindow, for example.
+
+	mainWindow.addEventListener("viewWillOpen", function(e) {
+		this.setCenterhiddenInteractivity("TouchDisabledWithTapToClose");
+	});
+
+### viewWillClose
+
+When leftWindow or rightWindow will be closed, this event is fired with the *view* event parameter.
+
+Here, you can blur a searchBar in leftWindow, for example.
+
+	mainWindow.addEventListener("viewWillClose", function(e) {
+		this.setCenterhiddenInteractivity("TouchEnabled");
+	});
+
 ## Changelog
 
 **v1.1**  
