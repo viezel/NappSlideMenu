@@ -9,7 +9,7 @@ Thanks to `Tom Adriaenssen` for his great work with ViewDeck https://github.com/
 
 
 ![NappSlideMenu](https://raw.github.com/viezel/NappSlideMenu/master/readme/slidemenu.png) 
-![NappSlideMenu-left](https://raw.github.com/viezel/NappSlideMenu/master/readme/slidemenuleft.png)
+![NappSlideMenuleft](https://raw.github.com/viezel/NappSlideMenu/master/readme/slidemenuleft.png)
 
 ### Get the module
 
