@@ -6,7 +6,7 @@ version: 1.2
 apiversion: 2
 description: Slider Menu
 author: Mads Møller
-license: Apache
+license: MIT license
 copyright: Napp
 
 

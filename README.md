@@ -8,8 +8,8 @@ The module is licensed under the MIT license.
 Thanks to `Tom Adriaenssen` for his great work with ViewDeck https://github.com/Inferis/ViewDeck
 
 
-![NappSlideMenu](https://raw.github.com/viezel/NappSlideMenu/master/documentation/slidemenu.png) 
-![NappSlideMenu-left](https://raw.github.com/viezel/NappSlideMenu/master/documentation/slidemenu-left.png)
+![NappSlideMenu](https://raw.github.com/viezel/NappSlideMenu/master/readme/slidemenu.png) 
+![NappSlideMenu-left](https://raw.github.com/viezel/NappSlideMenu/master/readme/slidemenu-left.png)
 
 ### Get the module
 
@@ -141,6 +141,73 @@ Here, you can blur a searchBar in leftWindow, for example.
 mainWindow.addEventListener("viewWillClose", function(e) {
 	this.setCenterhiddenInteractivity("TouchEnabled");
 });
+```
+
+
+## Alloy usage
+
+### Controller (index.js)
+```javascript
+var NappSlideMenu = require('dk.napp.slidemenu');
+
+var window = NappSlideMenu.createSlideMenuWindow({
+	centerWindow:$.navgroup,
+	leftWindow:$.leftWindow,
+	rightWindow:$.rightWindow,
+	leftLedge:80,
+	parallaxAmount:0.2
+});
+
+$.leftTable.addEventListener("click", function(e){
+	// implement logic
+});
+
+function openLeft(){
+	window.toggleLeftView();
+}
+function openRight(){
+	window.toggleRightView();
+}
+
+window.open(); //open the app
+```
+
+### View (index.xml)
+```xml
+<Alloy>
+    <Window id="leftWindow">
+        <TableView id="leftTable">
+            <TableViewRow>
+                <Label text="hello left window"></Label>
+            </TableViewRow>
+        </TableView>
+    </Window>
+    
+    <NavigationGroup id="navgroup">
+     	<Window id="win">
+			<LeftNavButton>
+				<Button title="Left" onClick="openLeft"></Button>
+			</LeftNavButton>
+			<RightNavButton>
+				<Button title="Right" onClick="openRight"></Button>
+			</RightNavButton>
+     	    <TableView >
+	            <TableViewRow>
+	                <Label text="hello center window"></Label>
+	            </TableViewRow>
+        	</TableView>
+     	</Window>   
+    </NavigationGroup>
+    
+    <Window id="rightWindow">
+        <TableView id="rightTable">
+            <TableViewRow>
+                <Label text="hello right window"></Label>
+            </TableViewRow>
+        </TableView>
+    </Window>
+</Alloy>
+
 ```
 
 ## Changelog
