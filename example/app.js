@@ -128,14 +128,27 @@ var window = NappSlideMenu.createSlideMenuWindow({
 });
 
 window.addEventListener("viewWillOpen", function(e) {
-	Ti.API.info(e.view + "Window will open");
-	//window.setCenterhiddenInteractivity("TouchDisabledWithTapToClose");
+	Ti.API.info(e);
+});
+window.addEventListener("viewWillClose", function(e) {
+	Ti.API.info(e);
 });
 
-window.addEventListener("viewWillClose", function(e) {
-	Ti.API.info(e.view + "Window will close");
-	//window.setCenterhiddenInteractivity("TouchEnabled");
+window.addEventListener("viewDidOpen", function(e) {
+	Ti.API.info(e);
 });
+window.addEventListener("viewDidClose", function(e) {
+	Ti.API.info(e);
+});
+
+window.addEventListener("didChangeOffset", function(e) {
+	Ti.API.info(e);
+});
+window.addEventListener("centerViewDidShow", function(e) {
+	Ti.API.info(e);
+});
+
+
 
 window.open(); //init the app
 

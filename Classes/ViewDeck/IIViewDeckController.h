@@ -25,6 +25,29 @@
 
 #import <UIKit/UIKit.h>
 
+// thanks to http://stackoverflow.com/a/8594878/742176
+
+#if TARGET_OS_IPHONE && defined(__IPHONE_5_0) && (__IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_5_0) && __clang__ && (__clang_major__ >= 3)
+#define II_SDK_SUPPORTS_WEAK 1
+#elif TARGET_OS_MAC && defined(__MAC_10_7) && (MAC_OS_X_VERSION_MIN_REQUIRED >= __MAC_10_7) && __clang__ && (__clang_major__ >= 3)
+#define II_SDK_SUPPORTS_WEAK 1
+#else
+#define II_SDK_SUPPORTS_WEAK 0
+#endif
+
+#if II_SDK_SUPPORTS_WEAK
+#define __ii_weak        __weak
+#define ii_weak_property weak
+#else
+#if __clang__ && (__clang_major__ >= 3)
+#define __ii_weak __unsafe_unretained
+#else
+#define __ii_weak
+#endif
+#define ii_weak_property assign
+#endif
+
+
 @protocol IIViewDeckControllerDelegate;
 
 enum {
@@ -47,7 +70,8 @@ enum {
     IIViewDeckNavigationBarPanning,   // panning only occurs when you start touching in the navigation bar (when the center controller is a UINavigationController with a visible navigation bar). Otherwise it will behave as IIViewDeckNoPanning. 
     IIViewDeckPanningViewPanning,      // panning only occurs when you start touching in a UIView set in panningView property
     IIViewDeckDelegatePanning,         // allows panning with a delegate
-    IIViewDeckNavigationBarOrOpenCenterPanning      //panning occurs when you start touching the navigation bar if the center controller is visible.  If the left or right controller is open, pannning occurs anywhere on the center controller, not just the navbar.
+    IIViewDeckNavigationBarOrOpenCenterPanning,      //panning occurs when you start touching the navigation bar if the center controller is visible.  If the left or right controller is open, pannning occurs anywhere on the center controller, not just the navbar.
+    IIViewDeckAllViewsPanning,        // you can pan anywhere in the viewdeck (including sideviews)
 };
 typedef UInt32 IIViewDeckPanningMode;
 
@@ -100,12 +124,15 @@ extern IIViewDeckOffsetOrientation IIViewDeckOffsetOrientationFromIIViewDeckSide
     BOOL _preRotationIsLandscape;
     IIViewDeckOffsetOrientation _offsetOrientation;
     UIInterfaceOrientation _willAppearShouldArrangeViewsAfterRotation;
+    CGPoint _willAppearOffset;
+    NSMutableArray* _finishTransitionBlocks;
+    int _disabledUserInteractions;
 }
 
 typedef void (^IIViewDeckControllerBlock) (IIViewDeckController *controller, BOOL success);
 typedef void (^IIViewDeckControllerBounceBlock) (IIViewDeckController *controller);
 
-@property (nonatomic, assign) id<IIViewDeckControllerDelegate> delegate;
+@property (nonatomic, ii_weak_property) __ii_weak id<IIViewDeckControllerDelegate> delegate;
 @property (nonatomic, assign) IIViewDeckDelegateMode delegateMode;
 
 @property (nonatomic, readonly, retain) NSArray* controllers;
@@ -117,7 +144,7 @@ typedef void (^IIViewDeckControllerBounceBlock) (IIViewDeckController *controlle
 @property (nonatomic, readonly, assign) UIViewController* slidingController;
 
 @property (nonatomic, retain) UIView* panningView;
-@property (nonatomic, assign) id<UIGestureRecognizerDelegate> panningGestureDelegate;
+@property (nonatomic, ii_weak_property) __ii_weak id<UIGestureRecognizerDelegate> panningGestureDelegate;
 @property (nonatomic, assign, getter=isEnabled) BOOL enabled;
 @property (nonatomic, assign, getter=isElastic) BOOL elastic;
 
@@ -289,3 +316,5 @@ typedef void (^IIViewDeckControllerBounceBlock) (IIViewDeckController *controlle
 @property(nonatomic,readonly,retain) IIViewDeckController *viewDeckController; 
 
 @end
+
+

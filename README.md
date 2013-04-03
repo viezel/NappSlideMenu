@@ -132,9 +132,13 @@ mainWindow.addEventListener("viewWillOpen", function(e) {
 });
 ```
 
+### viewDidOpen
+When the leftWindow or rightWindow did open. The animation has completed. 
+
+
 ### viewWillClose
 
-When leftWindow or rightWindow will be closed, this event is fired with the *view* event parameter.
+When the leftWindow or rightWindow will be closed, this event is fired with the *view* event parameter.
 
 Here, you can blur a searchBar in leftWindow, for example.
 ```javascript
@@ -143,8 +147,19 @@ mainWindow.addEventListener("viewWillClose", function(e) {
 });
 ```
 
+### viewDidClose
+When the leftWindow or rightWindow did open. The animation has completed. 
 
-## Alloy usage
+
+### didChangeOffset
+Change of offset.
+
+
+### centerViewDidShow
+When an animation from the one of the side windows to the CenterWindow completes.
+
+
+## Alloy example
 
 ### Controller (index.js)
 ```javascript
@@ -154,8 +169,7 @@ var window = NappSlideMenu.createSlideMenuWindow({
 	centerWindow:$.navgroup,
 	leftWindow:$.leftWindow,
 	rightWindow:$.rightWindow,
-	leftLedge:80,
-	parallaxAmount:0.2
+	leftLedge:80
 });
 
 $.leftTable.addEventListener("click", function(e){
@@ -211,6 +225,10 @@ window.open(); //open the app
 ```
 
 ## Changelog
+
+**v1.2.1**  
+Updated ViewDeck to newest version (2.2.8).  
+Added event: viewDidOpen, viewDidClose, didChangeOffset and centerViewDidShow.   
 
 **v1.2**  
 Added viewWillClose and viewWillOpen eventlisteners.   

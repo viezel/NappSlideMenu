@@ -40,11 +40,8 @@
 	} else if (viewDeckSide == IIViewDeckLeftSide) {
 		viewOpened = @"left";
 	}
-	
 	if ([self _hasListeners:@"viewWillOpen"]) {
-		[self fireEvent:@"viewWillOpen" withObject:@{
-			@"view": viewOpened
-		 } propagate:YES];
+		[self fireEvent:@"viewWillOpen" withObject:@{ @"view": viewOpened } propagate:YES];
 	}
 }
 
@@ -57,11 +54,60 @@
 	} else if (viewDeckSide == IIViewDeckLeftSide) {
 		viewClosed = @"left";
 	}
-	
 	if ([self _hasListeners:@"viewWillClose"]) {
-		[self fireEvent:@"viewWillClose" withObject:@{
-			@"view": viewClosed
-		 } propagate:YES];
+		[self fireEvent:@"viewWillClose" withObject:@{ @"view": viewClosed } propagate:YES];
+	}
+}
+
+- (void)viewDeckController:(IIViewDeckController*)viewDeckController didOpenViewSide:(IIViewDeckSide)viewDeckSide animated:(BOOL)animated
+{
+    NSString *viewClosed;
+	if (viewDeckSide == IIViewDeckRightSide) {
+		viewClosed = @"right";
+	} else if (viewDeckSide == IIViewDeckLeftSide) {
+		viewClosed = @"left";
+	}
+	if ([self _hasListeners:@"viewDidOpen"]) {
+		[self fireEvent:@"viewDidOpen" withObject:@{ @"view": viewClosed } propagate:YES];
+	}
+}
+
+- (void)viewDeckController:(IIViewDeckController*)viewDeckController didCloseViewSide:(IIViewDeckSide)viewDeckSide animated:(BOOL)animated
+{
+    NSString *viewClosed;
+	if (viewDeckSide == IIViewDeckRightSide) {
+		viewClosed = @"right";
+	} else if (viewDeckSide == IIViewDeckLeftSide) {
+		viewClosed = @"left";
+	}
+	if ([self _hasListeners:@"viewDidClose"]) {
+		[self fireEvent:@"viewDidClose" withObject:@{ @"view": viewClosed } propagate:YES];
+	}
+}
+
+- (void)viewDeckController:(IIViewDeckController*)viewDeckController didChangeOffset:(CGFloat)offset orientation:(IIViewDeckOffsetOrientation)orientation panning:(BOOL)panning
+{    
+    NSString *ori;
+	if (orientation == IIViewDeckHorizontalOrientation) {
+		ori = @"horizontal";
+	} else if (orientation == IIViewDeckVerticalOrientation) {
+		ori = @"vertical";
+	}
+	if ([self _hasListeners:@"didChangeOffset"]) {
+		[self fireEvent:@"didChangeOffset" withObject:@{ @"orientation": ori, @"panning":NUMBOOL(panning), @"offset":NUMFLOAT(offset) } propagate:YES];
+	}
+}
+
+- (void)viewDeckController:(IIViewDeckController*)viewDeckController didShowCenterViewFromSide:(IIViewDeckSide)viewDeckSide animated:(BOOL)animated
+{
+    NSString *centerView;
+	if (viewDeckSide == IIViewDeckRightSide) {
+		centerView = @"right";
+	} else if (viewDeckSide == IIViewDeckLeftSide) {
+		centerView = @"left";
+	}
+	if ([self _hasListeners:@"centerViewDidShow"]) {
+		[self fireEvent:@"centerViewDidShow" withObject:@{ @"view": centerView } propagate:YES];
 	}
 }
 
