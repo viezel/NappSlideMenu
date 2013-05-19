@@ -92,6 +92,31 @@ mainWindow.setPanningMode("NoPanning");
 | NavigationBarPanning | Panning only occurs when you start touching in the navigation bar (when the center controller is a UINavigationController with a visible navigation bar). Otherwise it will behave as IIViewDeckNoPanning. | 
 | NavigationBarOrOpenCenterPanning | Panning occurs when you start touching the navigation bar if the centerWindow is visible.  If the left or right controller is open, pannning occurs anywhere on the center controller, not just the navbar. | 
 
+### setParallaxAmount
+
+Parallax is the amount of parallax between the centerWindow and a sideWindow animation. Set a value between 0 and 1. 
+Its a very cool effect. Play with the slider in the example code to see the effect!
+
+```javascript
+mainWindow.setParallaxAmount(0.3);
+```
+
+### setOpenViewAnimationDuration
+
+Set the duration of the animation when leftWindow or rightWindow is opened. It takes a float as argument
+
+```javascript
+mainWindow.setOpenViewAnimationDuration(0.3);
+```
+
+### setCloseViewAnimationDuration
+
+Set the duration of the animation when leftWindow or rightWindow is closed. It takes a float as argument
+
+```javascript
+mainWindow.setCloseViewAnimationDuration(0.3);
+```
+
 
 ## API Methods
 
@@ -111,12 +136,13 @@ A small animation to show the app user that its possible to interact with the Na
 
 	mainWindow.bounceLeftView();
 
-### setParallaxAmount
 
-Parallax is the amount of parallax between the centerWindow and a sideWindow animation. Set a value between 0 and 1. 
-Its a very cool effect. Play with the slider in the example code to see the effect!
+### isAnyViewOpen
+
+Check if any of the windows is open. This returns a boolean. 
+
 ```javascript
-mainWindow.setParallaxAmount(0.3);
+mainWindow.isAnyViewOpen();
 ```
 
 ## Events
@@ -126,6 +152,7 @@ mainWindow.setParallaxAmount(0.3);
 When leftWindow or rightWindow will be opened, this event is fired with the *view* event parameter.
 
 Here, you can block centerWindow, for example.
+
 ```javascript
 mainWindow.addEventListener("viewWillOpen", function(e) {
 	this.setCenterhiddenInteractivity("TouchDisabledWithTapToClose");
@@ -226,33 +253,47 @@ window.open(); //open the app
 
 ## Changelog
 
+**v1.3**  
+
+* Major bugfix/improvement: NavigationBarPanning is fully working now. You gain deeper control over which elements should react to the swipe gesture.  
+* Updated ViewDeck to newest version (2.3.1).  
+* Added setOpenViewAnimationDuration() and setCloseViewAnimationDuration().  
+* Added isAnyViewOpen().  
+
 **v1.2.1**  
-Updated ViewDeck to newest version (2.2.8).  
-Added event: viewDidOpen, viewDidClose, didChangeOffset and centerViewDidShow.   
+
+* Updated ViewDeck to newest version (2.2.8).  
+* Added event: viewDidOpen, viewDidClose, didChangeOffset and centerViewDidShow.   
 
 **v1.2**  
-Added viewWillClose and viewWillOpen eventlisteners.   
+
+* Added viewWillClose and viewWillOpen eventlisteners.   
 
 **v1.1**  
-Added setCenterhiddenInteractivity().  
-Added setPanningMode().  
+
+* Added setCenterhiddenInteractivity().  
+* Added setPanningMode().  
 
 
 **v1.0**  
-Updated ViewDeck to newest version (2.2.4).  
-Added setParallaxAmount().  
-Added setLeftWindow() and setRightLedge() setters  
-Added setLeftLedge() and setRightLedge() setters  
-Better example code
+
+* Updated ViewDeck to newest version (2.2.4).  
+* Added setParallaxAmount().  
+* Added setLeftWindow() and setRightLedge() setters  
+* Added setLeftLedge() and setRightLedge() setters  
+* Better example code
 
 **v0.6**  
-Added setCenterWindow(). Thanks to @rafaelks
+
+* Added setCenterWindow(). Thanks to @rafaelks
 
 **v0.5**  
-Working module. 
+
+* Working module. 
 
 **v0.4**  
-Semi working. 
+
+* Semi working. 
 
 ## Author
 
