@@ -238,6 +238,21 @@ UIViewController * ControllerForViewProxy(TiViewProxy * proxy)
     [controller setParallaxAmount:[TiUtils floatValue:args]];
 }
 
+-(void)setOpenViewAnimationDuration_:(id)args
+{
+    ENSURE_UI_THREAD(setOpenViewAnimationDuration_, args);
+	ENSURE_SINGLE_ARG(args, NSNumber);
+    [controller setOpenSlideAnimationDuration:[TiUtils floatValue:args]];
+}
+
+-(void)setCloseViewAnimationDuration_:(id)args
+{
+    ENSURE_UI_THREAD(setCloseViewAnimationDuration_, args);
+	ENSURE_SINGLE_ARG(args, NSNumber);
+    [controller setCloseSlideAnimationDuration:[TiUtils floatValue:args]];
+}
+
+
 
 
 @end
