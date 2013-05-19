@@ -131,6 +131,12 @@ UIViewController * ControllerForViewProxy(TiViewProxy * proxy)
     [controller toggleOpenView];
 }
 
+-(NSNumber*)isAnyViewOpen:(id)args
+{
+    return [controller isAnySideOpen] ? NUMBOOL(YES) : NUMBOOL(NO);
+}
+
+
 /* - NOT WORKING
 -(NSNumber *)canRightViewPushViewControllerOverCenterController:(id)args
 {
