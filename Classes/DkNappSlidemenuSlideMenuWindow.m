@@ -11,6 +11,7 @@
 #import "DkNappSlidemenuSlideMenuWindowProxy.h"
 #import "TiUtils.h"
 #import "TiViewController.h"
+#import "TiUIiPhoneNavigationGroupProxy.h"
 
 UIViewController * ControllerForViewProxy(TiViewProxy * proxy);
 
@@ -27,6 +28,11 @@ UIViewController * ControllerForViewProxy(TiViewProxy * proxy)
     return [[[TiViewController alloc] initWithViewProxy:(TiViewProxy<TiUIViewController>*)proxy] autorelease];
 }
 
+UINavigationController * NavigationControllerForViewProxy(TiUIiPhoneNavigationGroupProxy *proxy)
+{
+    return [proxy controller];
+}
+
 
 @implementation DkNappSlidemenuSlideMenuWindow
 
@@ -41,9 +47,18 @@ UIViewController * ControllerForViewProxy(TiViewProxy * proxy)
 {
 	if (controller==nil)
 	{
-        TiViewProxy* centerController = [self.proxy valueForUndefinedKey:@"centerWindow"];
-		TiViewProxy* leftWindow = [self.proxy valueForUndefinedKey:@"leftWindow"];
-        TiViewProxy* rightWindow = [self.proxy valueForUndefinedKey:@"rightWindow"];
+                
+        // Check in centerWindow is a UINavigationController
+        BOOL useNavController = FALSE;
+        if([[[[self.proxy valueForUndefinedKey:@"centerWindow"] class] description] isEqualToString:@"TiUIiPhoneNavigationGroupProxy"]) {
+            useNavController = TRUE;
+        }
+        
+        // navController or TiWindow ?
+        UIViewController *centerWindow = useNavController ? NavigationControllerForViewProxy([self.proxy valueForUndefinedKey:@"centerWindow"]) : ControllerForViewProxy([self.proxy valueForUndefinedKey:@"centerWindow"]);
+        
+		TiViewProxy *leftWindow = [self.proxy valueForUndefinedKey:@"leftWindow"];
+        TiViewProxy *rightWindow = [self.proxy valueForUndefinedKey:@"rightWindow"];
         
         float rightLedge = [TiUtils floatValue:[self.proxy valueForUndefinedKey:@"rightLedge"] def:65];
         float leftLedge = [TiUtils floatValue:[self.proxy valueForUndefinedKey:@"leftLedge"] def:65];
@@ -51,33 +66,34 @@ UIViewController * ControllerForViewProxy(TiViewProxy * proxy)
         if(leftWindow != nil){
             if(rightWindow != nil){
                 //both left and right
-                controller =  [[IIViewDeckController alloc] initWithCenterViewController:ControllerForViewProxy(centerController)
+                controller =  [[IIViewDeckController alloc] initWithCenterViewController: centerWindow
                                                                       leftViewController:ControllerForViewProxy(leftWindow)
                                                                      rightViewController:ControllerForViewProxy(rightWindow) ];    
             } else {
                 //left only
-                controller =  [[IIViewDeckController alloc] initWithCenterViewController:ControllerForViewProxy(centerController)
+                controller =  [[IIViewDeckController alloc] initWithCenterViewController:centerWindow
                                                                       leftViewController:ControllerForViewProxy(leftWindow)];
             }
         } else if(rightWindow != nil){
             //right only
-            controller =  [[IIViewDeckController alloc] initWithCenterViewController:ControllerForViewProxy(centerController)
+            controller =  [[IIViewDeckController alloc] initWithCenterViewController:centerWindow
                                                                  rightViewController:ControllerForViewProxy(rightWindow) ];
         } else {
             //error
-            NSLog(@"NappSlideMenu ERROR: No windows assigned");
+            NSLog(@"[ERROR] NappSlideMenu: No windows assigned");
             return nil;
         }
         
         //setting the ledge
         [controller setLeftSize:leftLedge];
         [controller setRightSize:rightLedge];
-
+        
         [controller setDelegate:(DkNappSlidemenuSlideMenuWindowProxy *)[self proxy]];
         
         UIView * controllerView = [controller view];
         [controllerView setFrame:[self bounds]];
         [self addSubview:controllerView];
+        
         
         [controller viewWillAppear:NO];
         [controller viewDidAppear:NO];
@@ -90,6 +106,8 @@ UIViewController * ControllerForViewProxy(TiViewProxy * proxy)
 	[[[self controller] view] setFrame:bounds];
     [super frameSizeChanged:frame bounds:bounds];
 }
+
+
 
 
 ////////////////////////////////////////
