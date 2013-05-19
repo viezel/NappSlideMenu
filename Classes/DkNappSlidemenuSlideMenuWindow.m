@@ -170,16 +170,8 @@ UIViewController * ControllerForViewProxy(TiViewProxy * proxy)
                              [NSNumber numberWithInteger:5],@"NavigationBarOrOpenCenterPanning",
                              nil];
     //NSLog(@"NAPP SLIDE MENU setPanningMode %i", [[mapping  objectForKey:string] intValue]);
+    
     [controller setPanningMode:[[mapping  objectForKey:string] intValue]];
-
-    /*
-    NSLog(@"IIViewDeckNoPanning %i", IIViewDeckNoPanning);
-    NSLog(@"IIViewDeckFullViewPanning %i", IIViewDeckFullViewPanning);
-    NSLog(@"IIViewDeckNavigationBarPanning %i", IIViewDeckNavigationBarPanning);
-    NSLog(@"IIViewDeckPanningViewPanning %i", IIViewDeckPanningViewPanning);
-    NSLog(@"IIViewDeckDelegatePanning %i", IIViewDeckDelegatePanning);
-    NSLog(@"IIViewDeckNavigationBarOrOpenCenterPanning %i", IIViewDeckNavigationBarOrOpenCenterPanning);*/
-
 }
 
 -(void)setCenterhiddenInteractivity_:(id)args
