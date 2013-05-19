@@ -8,6 +8,7 @@ var leftTableView = Ti.UI.createTableView({
 });
 winLeft.add(leftTableView);
 leftTableView.addEventListener("click", function(e){
+	Ti.API.info("isAnyViewOpen: " + window.isAnyViewOpen());
 	switch(e.index){
 		case 0:
 		case 1:
@@ -19,8 +20,9 @@ leftTableView.addEventListener("click", function(e){
 			break;
 		case 3:
 			var newWin = Ti.UI.createWindow({backgroundColor:"red",title:"pushed window"});
+			
 			window.setCenterWindow(newWin);
-			window.toggleLeftView(); //animate back to center
+			//window.toggleLeftView(); //animate back to center
 			break;
 		case 4:
 			//default navcontroller
@@ -54,14 +56,13 @@ function createCenterNavWindow(){
 	var leftBtn = Ti.UI.createButton({title:"Menu"});
 	leftBtn.addEventListener("click", function(){
 		window.toggleLeftView();
-		window.setCenterhiddenInteractivity("TouchDisabledWithTapToCloseBouncing");
-		window.setPanningMode("NavigationBarPanning");
+		window.setCenterhiddenInteractivity("TouchEnabled");
+		
 	});
 	var rightBtn = Ti.UI.createButton({title:"right"});
 	rightBtn.addEventListener("click", function(){
 		window.toggleRightView();
 		window.setCenterhiddenInteractivity("TouchEnabled");
-		window.setPanningMode("NoPanning");
 	});
 	win.leftNavButton = leftBtn;
 	win.rightNavButton = rightBtn;
@@ -78,7 +79,7 @@ function createCenterNavWindow(){
 			var num = 250;
 			window.setLeftLedge(num);
 		} else {
-			var num = 100;
+			var num = 150;
 			window.setLeftLedge(num);
 		}
 		leftLedgeBtn.setTitle("LeftLedgeBtn: " + num);
@@ -87,12 +88,35 @@ function createCenterNavWindow(){
 	});
 	scrollView.add(leftLedgeBtn);
 	
+	var panningMode = 1;
+	var panningModeBtn = Ti.UI.createButton({title:"PanningMode: FullViewPanning", font:{fontSize:10}, width:300, top:10});
+	panningModeBtn.addEventListener("click", function(e){
+		if(panningMode == 2){
+			panningMode = 0;
+		} else {
+			panningMode++;
+		}
+		switch(panningMode){
+			case 0:
+				window.setPanningMode("NoPanning");
+				break;
+			case 1:
+				window.setPanningMode("FullViewPanning");
+				break;
+			case 2:
+				window.setPanningMode("NavigationBarPanning");
+				break;
+		}
+		panningModeBtn.setTitle("PanningMode: " + window.panningMode);
+	});
+	scrollView.add(panningModeBtn);
+	
 	var slider = Ti.UI.createSlider({
 		top: 20,
 	    min: 0,
 	    max: 1,
 	    width: 280,
-	    value: 0
+	    value: 0.1
 	});
 	var label = Ti.UI.createLabel({
 	    text: "Parallax: " + slider.value,
@@ -121,10 +145,10 @@ function createCenterNavWindow(){
 var NappSlideMenu = require('dk.napp.slidemenu');
 
 var window = NappSlideMenu.createSlideMenuWindow({
-	centerWindow:navController,
+	centerWindow: navController,
 	leftWindow:winLeft,
 	rightWindow:winRight,
-	leftLedge:100
+	leftLedge:150
 });
 
 window.addEventListener("viewWillOpen", function(e) {
@@ -142,14 +166,14 @@ window.addEventListener("viewDidClose", function(e) {
 });
 
 window.addEventListener("didChangeOffset", function(e) {
-	Ti.API.info(e);
+	//Ti.API.info(e);
 });
 window.addEventListener("centerViewDidShow", function(e) {
 	Ti.API.info(e);
 });
 
-
-
 window.open(); //init the app
+
+
 
 ////////////////////////////////////////////////
