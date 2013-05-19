@@ -142,6 +142,11 @@
     TiThreadPerformOnMainThread(^{[(DkNappSlidemenuSlideMenuWindow*)[self view] toggleOpenView:args];}, NO);
 }
 
+-(NSNumber*)isAnyViewOpen:(id)args {
+    return [(DkNappSlidemenuSlideMenuWindow*)[self view] isAnyViewOpen:args];
+}
+
+
 /* - NOT WORKING
 -(void)rightViewPushViewControllerOverCenterController:(id)args {
     TiThreadPerformOnMainThread(^{[(DkNappSlidemenuSlideMenuWindow*)[self view] rightViewPushViewControllerOverCenterController:args];}, NO);
