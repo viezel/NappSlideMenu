@@ -431,6 +431,10 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
 
 
 - (void)cleanup {
+        
+    [self removeObserver:self forKeyPath:@"parentViewController"];
+    [self.view removeObserver:self forKeyPath:@"bounds"];
+
     self.originalShadowRadius = 0;
     self.originalShadowOpacity = 0;
     self.originalShadowColor = nil;
