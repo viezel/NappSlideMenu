@@ -253,6 +253,10 @@ window.open(); //open the app
 
 ## Changelog
 
+**v1.3.1**  
+
+* Fix memory leak in ViewDeck when closing the NappSlideMenu. Thanks to @Michele 
+
 **v1.3**  
 
 * Major bugfix/improvement: NavigationBarPanning is fully working now. You gain deeper control over which elements should react to the swipe gesture.  
