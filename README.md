@@ -248,10 +248,17 @@ window.open(); //open the app
         </TableView>
     </Window>
 </Alloy>
-
 ```
 
 ## Changelog
+
+**v1.4.0** 
+
+* iOS7 support
+* Titanium minimum SDK changed to 3.1.3.GA
+* iOS min-sdk is now 5.0 
+* Known issue:
+  * Translucent navigationBar contains a visual bug. You should disable it.
 
 **v1.3.2**  
 

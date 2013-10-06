@@ -11,7 +11,7 @@
 #import "DkNappSlidemenuSlideMenuWindowProxy.h"
 #import "TiUtils.h"
 #import "TiViewController.h"
-#import "TiUIiPhoneNavigationGroupProxy.h"
+#import "TiUIiOSNavWindowProxy.h"
 
 UIViewController * ControllerForViewProxy(TiViewProxy * proxy);
 
@@ -25,10 +25,10 @@ UIViewController * ControllerForViewProxy(TiViewProxy * proxy)
         [proxy reposition];
         [proxy windowDidOpen];
     },YES);
-    return [[[TiViewController alloc] initWithViewProxy:(TiViewProxy<TiUIViewController>*)proxy] autorelease];
+    return [[[TiViewController alloc] initWithViewProxy:proxy] autorelease];
 }
 
-UINavigationController * NavigationControllerForViewProxy(TiUIiPhoneNavigationGroupProxy *proxy)
+UINavigationController * NavigationControllerForViewProxy(TiUIiOSNavWindowProxy *proxy)
 {
     return [proxy controller];
 }
@@ -45,12 +45,11 @@ UINavigationController * NavigationControllerForViewProxy(TiUIiPhoneNavigationGr
 
 -(IIViewDeckController*)controller
 {
-	if (controller==nil)
+    if (controller==nil)
 	{
-                
         // Check in centerWindow is a UINavigationController
         BOOL useNavController = FALSE;
-        if([[[[self.proxy valueForUndefinedKey:@"centerWindow"] class] description] isEqualToString:@"TiUIiPhoneNavigationGroupProxy"]) {
+        if([[[[self.proxy valueForUndefinedKey:@"centerWindow"] class] description] isEqualToString:@"TiUIiOSNavWindowProxy"]) {
             useNavController = TRUE;
         }
         
@@ -209,8 +208,12 @@ UINavigationController * NavigationControllerForViewProxy(TiUIiPhoneNavigationGr
 -(void)setCenterWindow_:(id)args
 {
 	ENSURE_UI_THREAD(setCenterWindow_, args);
-	ENSURE_SINGLE_ARG(args, TiViewProxy);
-	[controller setCenterController: ControllerForViewProxy(args)];
+	BOOL useNavController = FALSE;
+    if([[[args class] description] isEqualToString:@"TiUIiOSNavWindowProxy"]) {
+        useNavController = TRUE;
+    }
+    UIViewController *centerWindow = useNavController ? NavigationControllerForViewProxy(args) : ControllerForViewProxy(args);
+	[controller setCenterController: centerWindow];
 }
 
 -(void)setLeftWindow_:(id)args
@@ -231,7 +234,8 @@ UINavigationController * NavigationControllerForViewProxy(TiUIiPhoneNavigationGr
 {
 	ENSURE_UI_THREAD(setLeftLedge_, args);
 	ENSURE_SINGLE_ARG(args, NSNumber);
-	[controller setLeftSize:[TiUtils floatValue:args]];
+	NSLog(@"setLeftLedge_");
+    [controller setLeftSize:[TiUtils floatValue:args]];
 }
 
 -(void)setRightLedge_:(id)args

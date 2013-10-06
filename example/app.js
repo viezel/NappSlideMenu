@@ -4,7 +4,13 @@ var winLeft = Ti.UI.createWindow();
 var leftTableView = Ti.UI.createTableView({
 	font:{fontSize:12},
 	rowHeight:40,
-	data:[{title:'Basic'},{title:'Basic2'}, {title:'left to right'}, {title:'Change Center Windowr'}, {title:'Default Window'} ]
+	data:[
+		{title:'Basic'},
+		{title:'Basic2'}, 
+		{title:'left to right'}, 
+		{title:'Change Center Windowr'}, 
+		{title:'Default Window'} 
+	]
 });
 winLeft.add(leftTableView);
 leftTableView.addEventListener("click", function(e){
@@ -19,14 +25,16 @@ leftTableView.addEventListener("click", function(e){
 			window.toggleOpenView();
 			break;
 		case 3:
-			var newWin = Ti.UI.createWindow({backgroundColor:"red",title:"pushed window"});
+			var newWin = Ti.UI.createWindow({
+				backgroundColor:"red"
+			});
 			
 			window.setCenterWindow(newWin);
 			//window.toggleLeftView(); //animate back to center
 			break;
 		case 4:
 			//default navcontroller
-			window.setCenterWindow(navController);
+			window.setCenterWindow(createCenterNavWindow());
 			window.toggleLeftView(); //animate back to center
 			break;
 	}
@@ -51,7 +59,9 @@ function createCenterNavWindow(){
 	var win = Ti.UI.createWindow({
 		backgroundColor:'#eee',
 		title:"Napp Slide Menu",
-		barColor:"#000"
+		tintColor:"purple",
+		translucent:false,
+		barColor:"#F9A"
 	});
 	var leftBtn = Ti.UI.createButton({title:"Menu"});
 	leftBtn.addEventListener("click", function(){
@@ -132,7 +142,7 @@ function createCenterNavWindow(){
 	win.add(scrollView);
 	
 	//NAV
-	var navController = Ti.UI.iPhone.createNavigationGroup({
+	var navController = Ti.UI.iOS.createNavigationWindow({
 		window : win
 	});
 	
