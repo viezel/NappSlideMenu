@@ -252,6 +252,10 @@ window.open(); //open the app
 
 ## Changelog
 
+**v1.4.1** 
+
+* iOS7 statusbar update
+
 **v1.4.0** 
 
 * iOS7 support
