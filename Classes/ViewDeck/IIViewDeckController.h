@@ -128,12 +128,15 @@ extern IIViewDeckOffsetOrientation IIViewDeckOffsetOrientationFromIIViewDeckSide
     NSMutableArray* _finishTransitionBlocks;
     int _disabledUserInteractions;
     BOOL _needsAddPannersIfAllPannersAreInactive;
+#ifdef __IPHONE_7_0
+    UIView *_statusBarCoveringView;
+#endif
 }
 
 typedef void (^IIViewDeckControllerBlock) (IIViewDeckController *controller, BOOL success);
 typedef void (^IIViewDeckControllerBounceBlock) (IIViewDeckController *controller);
 
-@property (nonatomic, ii_weak_property) __ii_weak id<IIViewDeckControllerDelegate> delegate;
+@property (nonatomic, assign) id<IIViewDeckControllerDelegate> delegate;
 @property (nonatomic, assign) IIViewDeckDelegateMode delegateMode;
 
 @property (nonatomic, readonly, retain) NSArray* controllers;
@@ -145,7 +148,7 @@ typedef void (^IIViewDeckControllerBounceBlock) (IIViewDeckController *controlle
 @property (nonatomic, readonly, assign) UIViewController* slidingController;
 
 @property (nonatomic, retain) IBOutlet UIView* panningView;
-@property (nonatomic, ii_weak_property) __ii_weak id<UIGestureRecognizerDelegate> panningGestureDelegate;
+@property (nonatomic, assign) id<UIGestureRecognizerDelegate> panningGestureDelegate;
 @property (nonatomic, assign, getter=isEnabled) BOOL enabled;
 @property (nonatomic, assign, getter=isElastic) BOOL elastic;
 

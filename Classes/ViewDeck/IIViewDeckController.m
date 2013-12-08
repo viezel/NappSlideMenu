@@ -178,6 +178,9 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
 @property (nonatomic, retain) UIButton* centerTapper;
 @property (nonatomic, retain) UIView* centerView;
 @property (nonatomic, readonly) UIView* slidingControllerView;
+#ifdef __IPHONE_7_0
+@property (nonatomic, retain) UIView *statusBarCoveringView;
+#endif
 
 - (void)cleanup;
 
@@ -283,6 +286,10 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
 @synthesize centerTapperAccessibilityLabel = _centerTapperAccessibilityLabel;
 @synthesize centerTapperAccessibilityHint = _centerTapperAccessibilityHint;
 
+#ifdef __IPHONE_7_0
+@synthesize statusBarCoveringView = _statusBarCoveringView;
+#endif
+
 #pragma mark - Initalisation and deallocation
 
 - (void)commonInitWithCenterViewController:(UIViewController *)centerController
@@ -323,6 +330,10 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
     self.bottomController = nil;
     
     _ledge[IIViewDeckLeftSide] = _ledge[IIViewDeckRightSide] = _ledge[IIViewDeckTopSide] = _ledge[IIViewDeckBottomSide] = 44;
+    
+#ifdef __IPHONE_7_0
+    self.statusBarCoveringView = nil;
+#endif
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -570,8 +581,21 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
     if (beforeOffset != _offset)
         [self notifyDidChangeOffset:_offset orientation:orientation panning:panning];
     
-    
     [self setParallax];
+    
+#ifdef __IPHONE_7_0
+    if (orientation == IIViewDeckHorizontalOrientation) {
+        CGFloat max = self.referenceBounds.size.width - _maxLedge;
+        CGFloat percent = max > 0.0f ? offset / max : 0.0f;
+        if (percent < 0.0f) {
+            percent = -percent;
+        }
+        if (percent > 1.0f) {
+            percent = 1.0f;
+        }
+        self.statusBarCoveringView.alpha = percent;
+    }
+#endif
 }
 
 - (void)hideAppropriateSideViews {
@@ -808,6 +832,19 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
     self.originalShadowColor = nil;
     self.originalShadowOffset = CGSizeZero;
     self.originalShadowPath = nil;
+#ifdef __IPHONE_7_0
+    if (kCFCoreFoundationVersionNumber > kCFCoreFoundationVersionNumber_iOS_6_1) {
+        self.statusBarCoveringView = II_AUTORELEASE([[UIView alloc] init]);
+        self.statusBarCoveringView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        CGRect bounds = self.view.bounds;
+        bounds.size.height = [self statusBarHeight];
+        self.statusBarCoveringView.frame = bounds;
+        self.statusBarCoveringView.backgroundColor = [UIColor blackColor];
+        self.statusBarCoveringView.opaque = YES;
+        self.statusBarCoveringView.alpha = 0.0f;
+        [self.view addSubview:self.statusBarCoveringView];
+    }
+#endif
 }
 
 - (void)viewDidUnload
@@ -2934,8 +2971,14 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
             [self.centerView removeFromSuperview];
         };
         afterBlock = ^(UIViewController* controller) {
-            [self.view addSubview:self.centerView];
-             if ([self safe_shouldManageAppearanceMethods]) [controller viewWillAppear:NO];
+#ifdef __IPHONE_7_0
+            if (self.statusBarCoveringView)
+                [self.view insertSubview:self.centerView belowSubview:self.statusBarCoveringView];
+            else
+#endif
+                [self.view addSubview:self.centerView];
+            
+            if ([self safe_shouldManageAppearanceMethods]) [controller viewWillAppear:NO];
             UINavigationController* navController = [centerController isKindOfClass:[UINavigationController class]] 
                 ? (UINavigationController*)centerController 
                 : nil;
@@ -3163,6 +3206,20 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
         shadowedView.layer.shadowPath = [newShadowPath CGPath];
     }
 }
+
+#ifdef __IPHONE_7_0
+
+- (UIViewController *)childViewControllerForStatusBarStyle
+{
+    return self.centerController;
+}
+
+- (UIViewController *)childViewControllerForStatusBarHidden
+{
+    return self.centerController;
+}
+
+#endif
 
 
 @end
