@@ -128,9 +128,6 @@ extern IIViewDeckOffsetOrientation IIViewDeckOffsetOrientationFromIIViewDeckSide
     NSMutableArray* _finishTransitionBlocks;
     int _disabledUserInteractions;
     BOOL _needsAddPannersIfAllPannersAreInactive;
-#ifdef __IPHONE_7_0
-    UIView *_statusBarCoveringView;
-#endif
 }
 
 typedef void (^IIViewDeckControllerBlock) (IIViewDeckController *controller, BOOL success);
