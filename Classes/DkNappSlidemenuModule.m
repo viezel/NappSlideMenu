@@ -13,6 +13,11 @@
 
 @implementation DkNappSlidemenuModule
 
+# pragma mark StatusBar
+
+MAKE_SYSTEM_PROP(STATUSBAR_BLACK,0);
+MAKE_SYSTEM_PROP(STATUSBAR_WHITE,1);
+
 #pragma mark Internal
 
 // this is generated for your module, please do not change it
