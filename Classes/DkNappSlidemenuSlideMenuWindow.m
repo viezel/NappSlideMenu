@@ -56,14 +56,14 @@ UINavigationController * NavigationControllerForViewProxy(TiUIiOSNavWindowProxy 
         // navController or TiWindow ?
         UIViewController *centerWindow = useNavController ? NavigationControllerForViewProxy([self.proxy valueForUndefinedKey:@"centerWindow"]) : ControllerForViewProxy([self.proxy valueForUndefinedKey:@"centerWindow"]);
         
-		TiViewProxy *leftWindow = [self.proxy valueForUndefinedKey:@"leftWindow"];
+        TiViewProxy *leftWindow = [self.proxy valueForUndefinedKey:@"leftWindow"];
         TiViewProxy *rightWindow = [self.proxy valueForUndefinedKey:@"rightWindow"];
         
         float rightLedge = [TiUtils floatValue:[self.proxy valueForUndefinedKey:@"rightLedge"] def:65];
         float leftLedge = [TiUtils floatValue:[self.proxy valueForUndefinedKey:@"leftLedge"] def:65];
 
-        if(leftWindow != nil){
-            if(rightWindow != nil){
+        if(leftWindow != nil && ![leftWindow isKindOfClass:[NSNull class]]){
+            if(rightWindow != nil && ![rightWindow isKindOfClass:[NSNull class]]){
                 //both left and right
                 controller =  [[IIViewDeckController alloc] initWithCenterViewController: centerWindow
                                                                       leftViewController:ControllerForViewProxy(leftWindow)
@@ -73,19 +73,23 @@ UINavigationController * NavigationControllerForViewProxy(TiUIiOSNavWindowProxy 
                 controller =  [[IIViewDeckController alloc] initWithCenterViewController:centerWindow
                                                                       leftViewController:ControllerForViewProxy(leftWindow)];
             }
-        } else if(rightWindow != nil){
+        } else if(rightWindow != nil && ![rightWindow isKindOfClass:[NSNull class]]){
             //right only
             controller =  [[IIViewDeckController alloc] initWithCenterViewController:centerWindow
                                                                  rightViewController:ControllerForViewProxy(rightWindow) ];
         } else {
-            //error
-            NSLog(@"[ERROR] NappSlideMenu: No windows assigned");
-            return nil;
+            // no side menues - center only
+            controller =  [[IIViewDeckController alloc] initWithCenterViewController:centerWindow];
         }
         
         //setting the ledge
         [controller setLeftSize:leftLedge];
         [controller setRightSize:rightLedge];
+        
+        
+        if([self.proxy valueForUndefinedKey:@"statusBarStyle"] != nil){
+            [self setStatusBarStyle_:[self.proxy valueForUndefinedKey:@"statusBarStyle"]];
+        }
         
         [controller setDelegate:(DkNappSlidemenuSlideMenuWindowProxy *)[self proxy]];
         
@@ -147,11 +151,29 @@ UINavigationController * NavigationControllerForViewProxy(TiUIiOSNavWindowProxy 
     ENSURE_UI_THREAD(toggleOpenView,args);
     [controller toggleOpenView];
 }
+-(void)closeOpenView:(id)args
+{
+    ENSURE_UI_THREAD(closeOpenView,args);
+    [controller closeOpenView];
+}
 
 -(NSNumber*)isAnyViewOpen:(id)args
 {
     return [controller isAnySideOpen] ? NUMBOOL(YES) : NUMBOOL(NO);
 }
+
+-(NSNumber*)isLeftViewOpen:(id)args
+{
+    return [controller isSideClosed:IIViewDeckLeftSide] ? NUMBOOL(NO) : NUMBOOL(YES);
+}
+
+-(NSNumber*)isRightViewOpen:(id)args
+{
+    return [controller isSideClosed:IIViewDeckRightSide] ? NUMBOOL(NO) : NUMBOOL(YES);
+}
+
+
+
 
 
 /* - NOT WORKING
@@ -186,8 +208,6 @@ UINavigationController * NavigationControllerForViewProxy(TiUIiOSNavWindowProxy 
                              [NSNumber numberWithInteger:4],@"DelegatePanning",
                              [NSNumber numberWithInteger:5],@"NavigationBarOrOpenCenterPanning",
                              nil];
-    //NSLog(@"NAPP SLIDE MENU setPanningMode %i", [[mapping  objectForKey:string] intValue]);
-    
     [controller setPanningMode:[[mapping  objectForKey:string] intValue]];
 }
 
@@ -219,22 +239,31 @@ UINavigationController * NavigationControllerForViewProxy(TiUIiOSNavWindowProxy 
 -(void)setLeftWindow_:(id)args
 {
 	ENSURE_UI_THREAD(setLeftWindow_, args);
-	ENSURE_SINGLE_ARG(args, TiViewProxy);
-	[controller setLeftController:ControllerForViewProxy(args)];
+    ENSURE_SINGLE_ARG_OR_NIL(args, TiViewProxy);
+    if(args == nil){
+        [controller closeLeftViewAnimated:NO];
+        [controller setLeftController:nil];
+    } else {
+        [controller setLeftController:ControllerForViewProxy(args)];
+    }
 }
 
 -(void)setRightWindow_:(id)args
 {
 	ENSURE_UI_THREAD(setRightWindow_, args);
-	ENSURE_SINGLE_ARG(args, TiViewProxy);
-	[controller setRightController:ControllerForViewProxy(args)];
+    ENSURE_SINGLE_ARG_OR_NIL(args, TiViewProxy);
+    if(args == nil){
+        [controller closeRightViewAnimated:NO];
+        [controller setRightController:nil];
+    } else {
+        [controller setRightController:ControllerForViewProxy(args)];
+    }
 }
 
 -(void)setLeftLedge_:(id)args
 {
 	ENSURE_UI_THREAD(setLeftLedge_, args);
 	ENSURE_SINGLE_ARG(args, NSNumber);
-	NSLog(@"setLeftLedge_");
     [controller setLeftSize:[TiUtils floatValue:args]];
 }
 
@@ -266,7 +295,10 @@ UINavigationController * NavigationControllerForViewProxy(TiUIiOSNavWindowProxy 
     [controller setCloseSlideAnimationDuration:[TiUtils floatValue:args]];
 }
 
-
-
+-(void)setStatusBarStyle_:(NSNumber *)style
+{
+    ENSURE_UI_THREAD(setStatusBarStyle_,style);
+    [[UIApplication sharedApplication] setStatusBarStyle:[style intValue]];
+}
 
 @end
