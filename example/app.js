@@ -8,13 +8,17 @@ var leftTableView = Ti.UI.createTableView({
 		{title:'Basic'},
 		{title:'Basic2'}, 
 		{title:'left to right'}, 
-		{title:'Change Center Windowr'}, 
-		{title:'Default Window'} 
+		{title:'Change Center Window'}, 
+		{title:'Default Window'},
+		{title:'No Side Windows'},
+		{title:'Close open Window'} 
 	]
 });
 winLeft.add(leftTableView);
 leftTableView.addEventListener("click", function(e){
 	Ti.API.info("isAnyViewOpen: " + window.isAnyViewOpen());
+	Ti.API.info("isLeftViewOpen: " + window.isLeftViewOpen());
+	Ti.API.info("isRightViewOpen: " + window.isRightViewOpen());
 	switch(e.index){
 		case 0:
 		case 1:
@@ -36,6 +40,15 @@ leftTableView.addEventListener("click", function(e){
 			//default navcontroller
 			window.setCenterWindow(createCenterNavWindow());
 			window.toggleLeftView(); //animate back to center
+			break;
+		case 5:
+			//remove side windows
+			window.setLeftWindow(null);
+			window.setRightWindow(null);
+			break;
+		case 6:
+			//close views
+			window.closeOpenView();
 			break;
 	}
 });
@@ -158,7 +171,8 @@ var window = NappSlideMenu.createSlideMenuWindow({
 	centerWindow: navController,
 	leftWindow:winLeft,
 	rightWindow:winRight,
-	leftLedge:150
+	statusBarStyle: NappSlideMenu.STATUSBAR_WHITE,
+	leftLedge:100
 });
 
 window.addEventListener("viewWillOpen", function(e) {

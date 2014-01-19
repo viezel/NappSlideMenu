@@ -40,6 +40,7 @@ var mainWindow = NappSlideMenu.createSlideMenuWindow({
 	centerWindow:navController,
 	leftWindow:winLeft,
 	rightWindow:winRight,
+	statusBarStyle: NappSlideMenu.STATUSBAR_WHITE,
 	leftLedge:100
 });
 ```	
@@ -117,6 +118,29 @@ Set the duration of the animation when leftWindow or rightWindow is closed. It t
 mainWindow.setCloseViewAnimationDuration(0.3);
 ```
 
+### StatusBarStyle
+
+Use this property to set the statusBar style. You will need to add the following to tiapp.xml in order to make this work:
+
+    <ios>
+        <plist>
+    	    <dict>
+        	    <key>UIViewControllerBasedStatusBarAppearance</key>
+                <false/>
+            </dict>
+        </plist>
+    </ios>
+
+
+| input (constant) | Description | 
+| ----- | ----------- |
+| STATUSBAR_BLACK | The statusbar icons and text will be black | 
+| STATUSBAR_WHITE | The statusbar icons and text will be white | 
+
+```javascript
+mainWindow.setStatusBarStyle(NappSlideMenu.STATUSBAR_WHITE);
+```
+
 
 ## API Methods
 
@@ -137,9 +161,9 @@ A small animation to show the app user that its possible to interact with the Na
 	mainWindow.bounceLeftView();
 
 
-### isAnyViewOpen
+### isAnyViewOpen, isLeftViewOpen, isRightViewOpen
 
-Check if any of the windows is open. This returns a boolean. 
+Check if any, left or right window is open. This returns a boolean. 
 
 ```javascript
 mainWindow.isAnyViewOpen();
@@ -193,7 +217,7 @@ When an animation from the one of the side windows to the CenterWindow completes
 var NappSlideMenu = require('dk.napp.slidemenu');
 
 var window = NappSlideMenu.createSlideMenuWindow({
-	centerWindow:$.navgroup,
+	centerWindow:$.navWindow,
 	leftWindow:$.leftWindow,
 	rightWindow:$.rightWindow,
 	leftLedge:80
@@ -224,7 +248,7 @@ window.open(); //open the app
         </TableView>
     </Window>
     
-    <NavigationGroup id="navgroup">
+    <NavigationWindow id="navWindow">
      	<Window id="win">
 			<LeftNavButton>
 				<Button title="Left" onClick="openLeft"></Button>
@@ -238,7 +262,7 @@ window.open(); //open the app
 	            </TableViewRow>
         	</TableView>
      	</Window>   
-    </NavigationGroup>
+    </NavigationWindow>
     
     <Window id="rightWindow">
         <TableView id="rightTable">
@@ -251,6 +275,14 @@ window.open(); //open the app
 ```
 
 ## Changelog
+
+**v1.4.2** 
+
+* iOS7 statusbar updated again. Added `statusBarStyle` to help iOS7 and the LIGHT CONTENT bug. #22
+* Added `closeOpenView()`. Thanks to @chrisnharvey. #19
+* Added `isLeftViewOpen()` and `isRightViewOpen()`
+* Added ability to create the SlideMenu with centerWindow only.
+* Added ability to dynamically remove the left or right menu by setting leftWindow or rightWindow as null. Thanks to @nartex
 
 **v1.4.1** 
 
