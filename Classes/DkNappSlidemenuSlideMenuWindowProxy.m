@@ -142,8 +142,20 @@
     TiThreadPerformOnMainThread(^{[(DkNappSlidemenuSlideMenuWindow*)[self view] toggleOpenView:args];}, NO);
 }
 
+-(void)closeOpenView:(id)args {
+    TiThreadPerformOnMainThread(^{[(DkNappSlidemenuSlideMenuWindow*)[self view] closeOpenView:args];}, NO);
+}
+
 -(NSNumber*)isAnyViewOpen:(id)args {
     return [(DkNappSlidemenuSlideMenuWindow*)[self view] isAnyViewOpen:args];
+}
+
+-(NSNumber*)isLeftViewOpen:(id)args {
+    return [(DkNappSlidemenuSlideMenuWindow*)[self view] isLeftViewOpen:args];
+}
+
+-(NSNumber*)isRightViewOpen:(id)args {
+    return [(DkNappSlidemenuSlideMenuWindow*)[self view] isRightViewOpen:args];
 }
 
 
