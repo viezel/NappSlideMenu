@@ -276,6 +276,11 @@ window.open(); //open the app
 
 ## Changelog
 
+
+***v1.4.3***
+
+* Added support for 64-bit. 
+
 **v1.4.2** 
 
 * iOS7 statusbar updated again. Added `statusBarStyle` to help iOS7 and the LIGHT CONTENT bug. #22
